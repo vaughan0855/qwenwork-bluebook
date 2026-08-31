@@ -24,6 +24,17 @@ document.querySelectorAll('.sidebar-group-title').forEach(function(btn){
   });
 });
 
+// Keep the active state correct after the shared navigation is rendered on every page
+(function(){
+  var current=(window.location.pathname.split('/').pop() || 'index.html').split('#')[0];
+  document.querySelectorAll('.sidebar a[href]').forEach(function(link){
+    var href=link.getAttribute('href') || '';
+    if(href.startsWith('http') || href.startsWith('#')){return}
+    var target=href.split('#')[0].split('?')[0] || 'index.html';
+    if(target===current){link.classList.add('active')}
+  });
+})();
+
 // Mobile sidebar toggle
 var hamburger=document.querySelector('.hamburger');
 var sidebar=document.querySelector('.sidebar');

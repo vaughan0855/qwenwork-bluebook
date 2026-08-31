@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>月度经营仪表盘 · 2026-08（合成脱敏示例）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff; --bg-soft:#f5f7f2; --surface:#ffffff;
+  --text:#0e0f0c; --muted:#454745; --faint:#868685;
+  --ring:rgba(14,15,12,0.12); --ring-strong:rgba(14,15,12,0.22);
+  --green:#9fe870; --green-ink:#163300; --mint:#e2f6d5;
+  --pos:#054d28; --neg:#d03238; --warn:#ffd11a; --orange:#ffc091;
+  --bar-rev:#163300; --bar-net:#9fe870; --line-refund:#d03238;
+  --chip-neg-bg:rgba(208,50,56,0.10); --chip-warn-bg:rgba(255,209,26,0.16);
+  --grid:rgba(14,15,12,0.08);
+}
+body.dark{
+  --bg:#0e0f0c; --bg-soft:#14160f; --surface:#1a1c16;
+  --text:#f2f5ee; --muted:#b8bdb3; --faint:#868685;
+  --ring:rgba(255,255,255,0.16); --ring-strong:rgba(255,255,255,0.28);
+  --green:#9fe870; --green-ink:#0e1a05; --mint:rgba(159,232,112,0.14);
+  --pos:#9fe870; --neg:#ff8a8e; --warn:#ffd11a;
+  --bar-rev:#e9f5dd; --bar-net:#9fe870; --line-refund:#ff8a8e;
+  --chip-neg-bg:rgba(255,138,142,0.14); --chip-warn-bg:rgba(255,209,26,0.14);
+  --grid:rgba(255,255,255,0.10);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-feature-settings:"calt" 1}
+body{
+  font-family:'Inter',-apple-system,'Helvetica Neue',Arial,'PingFang SC','Microsoft YaHei',sans-serif;
+  background:var(--bg); color:var(--text); font-weight:400; font-size:16px; line-height:1.44;
+  letter-spacing:0.01em; transition:background .25s,color .25s;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 24px 64px}
+
+/* ===== theme toggle（右上角，仅一个监听器） ===== */
+.theme-toggle{position:fixed;top:18px;right:20px;z-index:50;width:40px;height:40px;border-radius:50%;
+  border:1px solid var(--ring);background:var(--surface);cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:16px;transition:transform .18s}
+.theme-toggle:hover{transform:scale(1.08)}
+.theme-toggle .icon-moon{display:none}
+body.dark .theme-toggle .icon-sun{display:none}
+body.dark .theme-toggle .icon-moon{display:inline}
+
+/* ===== header ===== */
+header{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:8px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand .dot{width:34px;height:34px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;
+  color:var(--green-ink);font-weight:900;font-size:15px}
+.brand .name{font-weight:800;font-size:15px;letter-spacing:-.01em}
+.sec-label{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:6px}
+h1{font-weight:900;font-size:40px;line-height:.9;letter-spacing:-.02em;margin:2px 0 6px}
+.sub{color:var(--muted);font-size:14px;max-width:640px}
+.badge-synth{display:inline-flex;align-items:center;gap:6px;background:var(--chip-warn-bg);color:var(--text);
+  border:1px dashed var(--ring-strong);border-radius:9999px;padding:4px 12px;font-size:12px;font-weight:600;margin-top:10px}
+.meta{font-size:12px;color:var(--faint);margin-top:6px}
+
+/* ===== 结论条 ===== */
+.verdict{margin-top:22px;background:var(--surface);border:1px solid var(--ring);border-radius:30px;padding:22px 26px;
+  display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:18px;align-items:center}
+.verdict .claim{font-size:17px;font-weight:600;line-height:1.5}
+.verdict .claim b{background:linear-gradient(transparent 62%,var(--green) 62%);padding:0 2px}
+.vnum .v{font-weight:900;font-size:24px;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.vnum .l{font-size:11px;color:var(--faint);font-weight:600;letter-spacing:.06em;margin-bottom:2px}
+.vnum .d{font-size:12px;font-weight:700;margin-top:2px}
+.up{color:var(--pos)} .down{color:var(--neg)} .flat{color:var(--muted)}
+
+/* ===== KPI ===== */
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:14px}
+.kpi{background:var(--surface);border:1px solid var(--ring);border-radius:24px;padding:16px 16px 14px;position:relative}
+.kpi.alert{border-color:var(--neg)}
+.kpi .k-l{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--faint);text-transform:uppercase}
+.kpi .k-v{font-weight:900;font-size:26px;margin-top:6px;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.kpi .k-v small{font-size:14px;font-weight:700;color:var(--muted)}
+.chip{display:inline-block;border-radius:9999px;padding:2px 9px;font-size:11.5px;font-weight:700;margin-top:7px}
+.chip.pos{background:var(--mint);color:var(--pos)}
+.chip.neg{background:var(--chip-neg-bg);color:var(--neg)}
+.kpi .k-f{margin-top:9px;font-size:11px;color:var(--faint);line-height:1.5;border-top:1px dashed var(--ring);padding-top:7px}
+.kpi .k-f code{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10.5px}
+
+/* ===== charts ===== */
+.charts{display:grid;grid-template-columns:1.15fr 1fr;gap:14px;margin-top:14px}
+.card{background:var(--surface);border:1px solid var(--ring);border-radius:30px;padding:20px 22px}
+.card h3{font-size:17px;font-weight:800;letter-spacing:-.01em}
+.card .card-sub{font-size:12.5px;color:var(--muted);margin-top:3px}
+.card svg{width:100%;height:auto;display:block;margin-top:10px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--muted)}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+
+/* region table */
+.rtable{width:100%;border-collapse:collapse;margin-top:12px;font-size:12.5px}
+.rtable th{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:700;text-align:right;padding:6px 4px;border-bottom:1px solid var(--ring)}
+.rtable th:first-child,.rtable td:first-child{text-align:left}
+.rtable td{padding:7px 4px;text-align:right;border-bottom:1px solid var(--grid);font-variant-numeric:tabular-nums}
+.rtable tr:last-child td{border-bottom:none}
+.rtable .rname{font-weight:700}
+.rtable .risk{color:var(--neg);font-weight:700}
+.rtable .good{color:var(--pos);font-weight:700}
+
+/* ===== anomaly band ===== */
+.anoms{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+.anom{background:var(--surface);border:1px solid var(--ring);border-left:4px solid var(--warn);border-radius:20px;padding:16px 18px}
+.anom.hot{border-left-color:var(--neg)}
+.anom .a-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.chip.invest{background:var(--chip-warn-bg);color:var(--text);font-size:11px;font-weight:700}
+.anom h4{font-size:14.5px;font-weight:800}
+.anom .fact{font-size:12.5px;color:var(--muted);line-height:1.55}
+.anom .fact b{color:var(--text)}
+.anom .hyp{margin-top:9px;font-size:11.5px;color:var(--faint);border-top:1px dashed var(--ring);padding-top:7px}
+.anom .hyp b{color:var(--muted)}
+
+/* ===== actions ===== */
+.actions{margin-top:14px;background:var(--green);border-radius:30px;padding:22px 26px;color:var(--green-ink)}
+.actions h3{font-weight:900;font-size:20px;letter-spacing:-.01em}
+.actions .a-sub{font-size:13px;opacity:.8;margin-top:2px}
+.act-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+.act{background:rgba(22,51,0,0.10);border-radius:20px;padding:15px 16px}
+.act .n{width:24px;height:24px;border-radius:50%;background:var(--green-ink);color:var(--green);font-weight:800;font-size:12.5px;
+  display:inline-flex;align-items:center;justify-content:center;margin-bottom:8px}
+.act b{display:block;font-size:14px;line-height:1.4}
+.act span{display:block;font-size:12px;margin-top:6px;opacity:.85;line-height:1.5}
+
+/* ===== footer ===== */
+.foot{margin-top:22px;background:var(--surface);border:1px solid var(--ring);border-radius:30px;padding:20px 24px}
+.foot h4{font-size:13px;font-weight:800;margin-bottom:8px}
+.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px 20px;font-size:11.5px;color:var(--muted)}
+.fgrid code{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10.5px;color:var(--text)}
+.src{margin-top:12px;padding-top:10px;border-top:1px dashed var(--ring);font-size:11.5px;color:var(--faint);line-height:1.7}
+.disclaimer{margin-top:14px;text-align:center;font-size:12px;color:var(--faint);font-weight:600}
+
+@media (max-width:960px){
+  .verdict{grid-template-columns:1fr 1fr}
+  .verdict .claim{grid-column:1/-1}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .charts{grid-template-columns:1fr}
+  .anoms,.act-grid{grid-template-columns:1fr}
+  h1{font-size:32px}
+}
+</style>
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" aria-label="切换暗黑模式" title="切换暗黑模式"><span class="icon-sun">☀️</span><span class="icon-moon">🌙</span></button>
+
+<div class="wrap">
+  <header>
+    <div>
+      <div class="brand"><div class="dot">Q</div><div class="name">经营分析 · 月度经营会</div></div>
+      <div class="sec-label" style="margin-top:14px">Monthly Business Review · 2026-08</div>
+      <h1>收入创新高，退款在加速</h1>
+      <p class="sub">一页看清：8 月收入、订单、净收入三个月连增且增速加快；但退款额环比 +78.6%，首次响应与按期交付连续三个月同步走弱。风险集中在西部、华南。</p>
+      <span class="badge-synth">⚠️ 本页全部数据为合成脱敏示例，不代表任何真实公司经营情况</span>
+      <div class="meta">口径版本 2026-08-29 ｜ 比率除特别注明外按订单数加权 ｜ 所有数字可由 CSV 逐行复算</div>
+    </div>
+  </header>
+
+  <!-- 结论条 -->
+  <section class="verdict">
+    <div class="claim">8 月收入 <b>105.5 万元</b>（+15.93%），但退款从 2.8 万跳到 <b>5.0 万</b>（+78.57%），净收入增速被压掉约 <b>2 个百分点</b>；全域首次响应 25.45h → 30.69h、按期交付 89.7% → 84.1%，连续三个月同向恶化。</div>
+    <div class="vnum"><div class="l">确认收入</div><div class="v">1,055,000 <small>元</small></div><div class="d up">+15.93% 环比</div></div>
+    <div class="vnum"><div class="l">退款</div><div class="v">50,000 <small>元</small></div><div class="d down">+78.57% 环比 · 待调查</div></div>
+    <div class="vnum"><div class="l">净收入 = 收入 − 退款</div><div class="v">1,005,000 <small>元</small></div><div class="d up">+13.94% 环比</div></div>
+  </section>
+
+  <!-- 5 KPI -->
+  <section class="kpis">
+    <div class="kpi">
+      <div class="k-l">① 确认收入</div>
+      <div class="k-v">105.5<small> 万元</small></div>
+      <span class="chip pos">+15.93%</span>
+      <div class="k-f"><code>Σ revenue_yuan（4 区域求和）</code><br>毛收入口径，未扣除退款（口径 02）</div>
+    </div>
+    <div class="kpi">
+      <div class="k-l">② 净收入</div>
+      <div class="k-v">100.5<small> 万元</small></div>
+      <span class="chip pos">+13.94%</span>
+      <div class="k-f"><code>收入 − 退款</code><br>单列展示，不与收入混用口径</div>
+    </div>
+    <div class="kpi alert">
+      <div class="k-l">③ 退款率（提示性）</div>
+      <div class="k-v">4.74<small>%</small></div>
+      <span class="chip neg">+1.66pp</span>
+      <div class="k-f"><code>refunds ÷ revenue</code><br>归属期未知，仅作提示；净收入口径为 4.98%</div>
+    </div>
+    <div class="kpi alert">
+      <div class="k-l">④ 首次响应时长</div>
+      <div class="k-v">30.69<small> h</small></div>
+      <span class="chip neg">+11.0% · 连升 3 月</span>
+      <div class="k-f"><code>Σ(响应×orders) ÷ Σorders</code><br>加权近似（简单平均 32.25h），待口径确认</div>
+    </div>
+    <div class="kpi alert">
+      <div class="k-l">⑤ 按期交付率</div>
+      <div class="k-v">84.06<small>%</small></div>
+      <span class="chip neg">−3.83pp · 连降 3 月</span>
+      <div class="k-f"><code>Σ(交付率×orders) ÷ Σorders</code><br>简单平均 82.50%，分子分母待人工确认</div>
+    </div>
+  </section>
+
+  <!-- charts -->
+  <section class="charts">
+    <div class="card">
+      <h3>收入与净收入：退款吃掉的缺口在变大</h3>
+      <div class="card-sub">柱 = 确认收入 / 净收入（左轴，万元）；线 = 退款率（右轴）。两柱之间的缺口就是当月退款额。回答业务方 Q1「收入变化」。</div>
+      <svg id="barChart" viewBox="0 0 640 360" role="img" aria-label="收入与净收入柱状图，退款率折线"></svg>
+      <div class="legend">
+        <span><i style="background:var(--bar-rev)"></i>确认收入</span>
+        <span><i style="background:var(--bar-net)"></i>净收入</span>
+        <span><i style="background:var(--line-refund);border-radius:50%"></i>退款率（右轴）</span>
+      </div>
+    </div>
+    <div class="card">
+      <h3>区域四象限：问题区域是西部，华南在滑向它</h3>
+      <div class="card-sub">X = 8 月收入环比；Y = 8 月退款率；气泡大小 = 退款额。虚线 = 全域均值。回答「哪个区域有问题」。</div>
+      <svg id="scatter" viewBox="0 0 560 380" role="img" aria-label="区域收入环比与退款率散点图"></svg>
+      <table class="rtable">
+        <thead><tr><th>区域</th><th>8月净收入(元)</th><th>收入环比</th><th>退款率 7→8月</th><th>交付率</th><th>首次响应</th></tr></thead>
+        <tbody id="regionRows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- anomaly band -->
+  <section class="anoms">
+    <div class="anom hot">
+      <div class="a-head"><span class="chip invest">待调查 A1</span><h4>西部退款激增</h4></div>
+      <div class="fact">8 月退款 <b>18,000 元</b>，退款率 <b>3.57% → 11.61%</b>（3.25 倍）；西部仅占全域收入 <b>14.7%</b>，却占全域退款 <b>36.0%</b>。若维持 7 月退款率，超额退款 <b>+12,464 元</b>。</div>
+      <div class="hyp"><b>待验证假设（非结论）：</b>原订单归属、集中客户/渠道、交付失败退回、录入或冲销。需调取退款逐单明细。</div>
+    </div>
+    <div class="anom hot">
+      <div class="a-head"><span class="chip invest">待调查 A2</span><h4>华南服务与交付同步走弱</h4></div>
+      <div class="fact">退款率 <b>3.50% → 5.22%</b>；百活跃客户工单数 <b>47.2 → 60.2</b>；按期交付率 <b>0.80</b> 为四区最低；首次响应 <b>35h</b>。退款额环比 +71.4%。</div>
+      <div class="hyp"><b>待验证假设（非结论）：</b>服务问题传导至退款、新客占比高、交付能力约束。需工单分类与退款关联数据。</div>
+    </div>
+    <div class="anom">
+      <div class="a-head"><span class="chip invest">待调查 A3</span><h4>全域响应连续三月变慢</h4></div>
+      <div class="fact">订单加权首次响应 <b>25.45h → 27.64h → 30.69h</b>；四区 6→8 月全部上升（华东 22→26h，西部 31→39h）。上月简报「感觉变慢」首次被量化。</div>
+      <div class="hyp"><b>待验证假设（非结论）：</b>人力未随订单扩充、流程卡点、指标定义变更。需指标分母与人力口径。</div>
+    </div>
+  </section>
+
+  <!-- actions -->
+  <section class="actions">
+    <h3>下个月先看什么 · 三个追查动作</h3>
+    <div class="a-sub">责任人与截止日期会上确认 —— 这三个答案决定 9 月仪表盘第二页讲什么</div>
+    <div class="act-grid">
+      <div class="act"><span class="n">1</span><b>西部 18,000 元退款逐单明细</b><span>原订单月份、退款原因码、是否集中在少数客户/订单。决定风险定性：一次性冲销 vs 系统性交付问题。</span></div>
+      <div class="act"><span class="n">2</span><b>华南工单分类与退款关联</b><span>61 个工单的类型分布、进入退款流程的比例。用于验证「服务问题 → 退款」这条链是否存在。</span></div>
+      <div class="act"><span class="n">3</span><b>交付与响应指标的分子分母</b><span>按期交付率与首次响应的统计口径、加权基准。定不下来，仪表盘第一页全国数只能给区间。</span></div>
+    </div>
+  </section>
+
+  <!-- footer: formulas & sources -->
+  <section class="foot">
+    <h4>公式与口径（每个数字可回溯）</h4>
+    <div class="fgrid">
+      <div><code>净收入 = revenue_yuan − refunds_yuan</code></div>
+      <div><code>退款率(提示) = refunds ÷ revenue</code></div>
+      <div><code>客单价 = revenue_yuan ÷ orders</code></div>
+      <div><code>环比增幅 = 本期 ÷ 上期 − 1</code></div>
+      <div><code>区域增长率 = 08月 ÷ 07月 − 1</code>（口径02指定）</div>
+      <div><code>加权均值 = Σ(值×orders) ÷ Σorders</code></div>
+      <div><code>超额退款 = 实际退款 − 收入×上月退款率</code></div>
+      <div><code>线索转订单 = orders ÷ leads</code></div>
+      <div><code>百客户工单 = tickets ÷ 活跃客户 × 100</code></div>
+    </div>
+    <div class="src">
+      数据来源：01-经营数据-脱敏.csv（12 行 = 4 区域 × 3 月，qualified ≤ leads 校验通过，收入/退款均为整千合成值）· 02-指标口径.md（退款不从收入自动扣除，需单独展示）· 03-上月经营简报.md（7 月「约 91 万」与复算 910,000 元一致；其对西部的口头判断已被复算反驳，待会上更正）· 04-业务方问题.md · 05-验收标准.md。<br>
+      注意：退款率分母存在口径矛盾（毛收入 vs 净收入，待业务负责人裁决）；按期交付率仅有结果值、无法独立复算；相关 ≠ 因果，响应时长与退款率样本相关约 0.79 但混杂区域差异与时间趋势。
+    </div>
+  </section>
+  <div class="disclaimer">合成脱敏示例 · Non-real synthetic data · 生成于 2026-08-29 · 仅用于口径校准与经营会流程演示</div>
+</div>
+
+<script>
+/* ================= 数据（全部来自 CSV 复算，来源见页脚） ================= */
+const M = ['2026-06','2026-07','2026-08'];
+const REV  = [830000, 910000, 1055000];   // Σ revenue_yuan
+const NET  = [807000, 882000, 1005000];   // REV - REFUND
+const REF  = [23000, 28000, 50000];       // Σ refunds_yuan
+const RR   = [2.77, 3.08, 4.74];          // 退款率 %
+const REGIONS = [
+  {n:'华东', d:17.14, r:2.68,  rf:11000, net:399000, rr7:'2.57→2.68', otd:'0.89', fr:'26h'},
+  {n:'华中', d:18.18, r:3.46,  rf:9000,  net:251000, rr7:'3.18→3.46', otd:'0.85', fr:'29h'},
+  {n:'华南', d:15.00, r:5.22,  rf:12000, net:218000, rr7:'3.50→5.22', otd:'0.80', fr:'35h'},
+  {n:'西部', d:10.71, r:11.61, rf:18000, net:137000, rr7:'3.57→11.61', otd:'0.76', fr:'39h'}
+];
+const AVG_D = 15.93, AVG_R = 4.74;        // 全域均值
+
+const cv = n => getComputedStyle(document.body).getPropertyValue(n).trim();
+const W  = v => (v/10000).toFixed(1);      // 元 → 万元
+
+/* ================= 柱状图 + 退款率折线 ================= */
+function drawBars(){
+  const svg = document.getElementById('barChart');
+  const Wd=640, Ht=360, L=64, R=64, T=28, B=44, pw=Wd-L-R, ph=Ht-T-B;
+  const maxV=1200000, y=v=>T+(1-v/maxV)*ph;
+  const maxR=6, yr=v=>T+(1-v/maxR)*ph;
+  const cRev=cv('--bar-rev'), cNet=cv('--bar-net'), cLine=cv('--line-refund'),
+        cTxt=cv('--text'), cMut=cv('--faint'), cGrid=cv('--grid'), cRing=cv('--ring');
+  let s='';
+  // grid + left ticks（万元）
+  [0,400000,800000,1200000].forEach(v=>{
+    s+=`<line x1="${L}" y1="${y(v)}" x2="${Wd-R}" y2="${y(v)}" stroke="${cGrid}" stroke-width="1"/>`;
+    s+=`<text x="${L-8}" y="${y(v)+4}" text-anchor="end" font-size="11" fill="${cMut}">${v/10000}</text>`;
+  });
+  s+=`<text x="${L-8}" y="${T-12}" text-anchor="end" font-size="10" fill="${cMut}" font-weight="700">万元</text>`;
+  // right ticks（退款率 %）
+  [0,2,4,6].forEach(v=>{
+    s+=`<text x="${Wd-R+8}" y="${yr(v)+4}" font-size="11" fill="${cLine}">${v}%</text>`;
+  });
+  s+=`<text x="${Wd-R+8}" y="${T-12}" font-size="10" fill="${cLine}" font-weight="700">退款率</text>`;
+  // bars
+  const gw=pw/3, bw=44;
+  M.forEach((m,i)=>{
+    const cx=L+gw*i+gw/2;
+    const x1=cx-bw-5, x2=cx+5;
+    s+=`<rect x="${x1}" y="${y(REV[i])}" width="${bw}" height="${y(0)-y(REV[i])}" rx="8" fill="${cRev}"><title>${m} 确认收入 ${REV[i].toLocaleString()} 元</title></rect>`;
+    s+=`<rect x="${x2}" y="${y(NET[i])}" width="${bw}" height="${y(0)-y(NET[i])}" rx="8" fill="${cNet}"><title>${m} 净收入 ${NET[i].toLocaleString()} 元</title></rect>`;
+    // 缺口标注 = 退款
+    s+=`<text x="${cx}" y="${y(REV[i])-8}" text-anchor="middle" font-size="10.5" fill="${cMut}" font-weight="600">退款 ${W(REF[i])}万</text>`;
+    s+=`<text x="${cx}" y="${y(0)+16}" text-anchor="middle" font-size="12" font-weight="700" fill="${cTxt}">${m}</text>`;
+    // 柱内数值（底部，避开顶部退款率折线标签）
+    const darkBar = (cRev==='#163300');
+    s+=`<text x="${x1+bw/2}" y="${y(0)-8}" text-anchor="middle" font-size="10" font-weight="700" fill="${darkBar?'#e2f6d5':'#163300'}" style="pointer-events:none">${W(REV[i])}</text>`;
+    s+=`<text x="${x2+bw/2}" y="${y(0)-8}" text-anchor="middle" font-size="10" font-weight="700" fill="${darkBar?'#163300':'#163300'}" style="pointer-events:none">${W(NET[i])}</text>`;
+  });
+  // refund-rate line
+  const pts=RR.map((v,i)=>[L+gw*i+gw/2, yr(v)]);
+  s+=`<polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="${cLine}" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="none"/>`;
+  pts.forEach((p,i)=>{
+    s+=`<circle cx="${p[0]}" cy="${p[1]}" r="4.5" fill="${cLine}"><title>${M[i]} 退款率 ${RR[i]}%</title></circle>`;
+    s+=`<text x="${p[0]}" y="${p[1]-10}" text-anchor="middle" font-size="10.5" font-weight="700" fill="${cLine}">${RR[i]}%</text>`;
+  });
+  // frame
+  s+=`<line x1="${L}" y1="${y(0)}" x2="${Wd-R}" y2="${y(0)}" stroke="${cRing}" stroke-width="1.5"/>`;
+  svg.innerHTML=s;
+}
+
+/* ================= 四象限散点 ================= */
+function drawScatter(){
+  const svg=document.getElementById('scatter');
+  const Wd=560,Ht=380,L=56,R=18,T=18,B=46,pw=Wd-L-R,ph=Ht-T-B;
+  const X0=8,X1=20,Y0=0,Y1=13;
+  const x=v=>L+(v-X0)/(X1-X0)*pw, y=v=>T+(1-(v-Y0)/(Y1-Y0))*ph;
+  const cTxt=cv('--text'),cMut=cv('--faint'),cGrid=cv('--grid'),cRing=cv('--ring'),
+        cNeg=cv('--neg'),cWarn=cv('--orange'),cPos=cv('--pos'),cSurf=cv('--surface');
+  let s='';
+  [0,3,6,9,12].forEach(v=>{ s+=`<line x1="${L}" y1="${y(v)}" x2="${Wd-R}" y2="${y(v)}" stroke="${cGrid}"/><text x="${L-6}" y="${y(v)+4}" text-anchor="end" font-size="11" fill="${cMut}">${v}%</text>`; });
+  [10,12,14,16,18,20].forEach(v=>{ s+=`<text x="${x(v)}" y="${y(0)+18}" text-anchor="middle" font-size="11" fill="${cMut}">${v}%</text>`; });
+  s+=`<text x="${L+pw/2}" y="${Ht-6}" text-anchor="middle" font-size="11" fill="${cMut}" font-weight="700">8 月收入环比 →</text>`;
+  s+=`<text x="14" y="${T+ph/2}" font-size="11" fill="${cMut}" font-weight="700" transform="rotate(-90 14 ${T+ph/2})" text-anchor="middle">8 月退款率 →</text>`;
+  // 均值线
+  s+=`<line x1="${x(AVG_D)}" y1="${T}" x2="${x(AVG_D)}" y2="${y(0)}" stroke="${cRing}" stroke-dasharray="5 4" stroke-width="1.5"/>`;
+  s+=`<line x1="${L}" y1="${y(AVG_R)}" x2="${Wd-R}" y2="${y(AVG_R)}" stroke="${cRing}" stroke-dasharray="5 4" stroke-width="1.5"/>`;
+  s+=`<text x="${x(AVG_D)+5}" y="${T+12}" font-size="10" fill="${cMut}">全域均值 ${AVG_D}%</text>`;
+  s+=`<text x="${Wd-R-4}" y="${y(AVG_R)-6}" text-anchor="end" font-size="10" fill="${cMut}">全域均值 ${AVG_R}%</text>`;
+  // 象限提示
+  s+=`<text x="${L+10}" y="${T+26}" font-size="11" font-weight="700" fill="${cWarn}">增长但退款偏高 · 关注</text>`;
+  s+=`<text x="${Wd-R-10}" y="${T+26}" text-anchor="end" font-size="11" font-weight="700" fill="${cPos}">优等生区</text>`;
+  s+=`<text x="${L+10}" y="${y(0)-10}" font-size="11" font-weight="700" fill="${cNeg}">重点风险区</text>`;
+  REGIONS.forEach(g=>{
+    const cx=x(g.d), cy=y(g.r), rad=Math.sqrt(g.rf)*0.09;
+    const col = g.r>AVG_R*2 ? cNeg : (g.r>AVG_R ? cWarn : cPos);
+    s+=`<circle cx="${cx}" cy="${cy}" r="${rad}" fill="${col}" fill-opacity="0.28" stroke="${col}" stroke-width="2"><title>${g.n}：收入环比 +${g.d}%，退款率 ${g.r}%，退款 ${g.rf.toLocaleString()} 元</title></circle>`;
+    // 标签位置：华东/华中相邻，分别放下方/上方避免碰撞
+    let lx=cx, ly=cy-rad-8, anchor='middle';
+    if(g.n==='华东'){ lx=cx-rad-8; ly=cy+4; anchor='end'; }
+    if(g.n==='华中'){ lx=cx; ly=cy+rad+18; }
+    s+=`<text x="${lx}" y="${ly}" text-anchor="${anchor}" font-size="12.5" font-weight="800" fill="${cTxt}">${g.n}</text>`;
+    s+=`<text x="${lx}" y="${ly+13}" text-anchor="${anchor}" font-size="10" fill="${cMut}">+${g.d}% / ${g.r}% / ${W(g.rf)}万</text>`;
+  });
+  svg.innerHTML=s;
+}
+
+/* ================= 区域表 ================= */
+function renderTable(){
+  const tb=document.getElementById('regionRows');
+  tb.innerHTML=REGIONS.map(g=>{
+    const risk = g.r>AVG_R*2;
+    return `<tr><td class="rname">${g.n}${risk?' <span style="color:var(--neg)">▲</span>':''}</td>
+    <td>${g.net.toLocaleString()}</td>
+    <td class="${g.d>=AVG_D?'good':''}">+${g.d.toFixed(2)}%</td>
+    <td class="${risk?'risk':''}">${g.rr7}</td>
+    <td>${g.otd}</td>
+    <td>${g.fr}</td></tr>`;
+  }).join('');
+}
+
+/* ================= 主题（单监听器铁律：只挂一个 addEventListener） ================= */
+(function initTheme(){
+  const saved=localStorage.getItem('theme');
+  const dark = saved ? saved==='dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+  if(dark) document.body.classList.add('dark');
+  document.getElementById('themeToggle').addEventListener('click',()=>{
+    document.body.classList.toggle('dark');
+    localStorage.setItem('theme', document.body.classList.contains('dark')?'dark':'light');
+    drawBars(); drawScatter();   // 图表颜色随主题重绘
+  });
+})();
+
+drawBars(); drawScatter(); renderTable();
+</script>
+</body>
+</html>

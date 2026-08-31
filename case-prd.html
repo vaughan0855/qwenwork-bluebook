@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>客户回访记录与下次跟进提醒：从模糊需求到一期 PRD — 千问办公绿皮书</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<button class="hamburger" aria-label="打开导航"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#0e0f0c" stroke-width="1.5" stroke-linecap="round"><line x1="3" y1="5" x2="17" y2="5"/><line x1="3" y1="10" x2="17" y2="10"/><line x1="3" y1="15" x2="17" y2="15"/></svg></button>
+<aside class="sidebar">
+  <div class="sidebar-header"><a href="index.html" class="sidebar-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>千问办公绿皮书</a></div>
+  <nav class="sidebar-nav">
+    <div class="sidebar-group"><button class="sidebar-group-title">开始<svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 4l4 4-4 4"/></svg></button><ul class="sidebar-group-items"><li><a href="index.html">首页</a></li><li><a href="toc.html">完整目录</a></li></ul></div>
+    <div class="sidebar-group"><button class="sidebar-group-title">小明的交付升级记<svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 4l4 4-4 4"/></svg></button><ul class="sidebar-group-items"><li><a href="ch0.html">序章 · 小明为什么打开千问办公</a></li><li><a href="ch1.html">第一章 · 先让资料池开口</a></li><li><a href="ch2.html">第二章 · “这个事情”到底要交付什么</a></li><li><a href="ch3.html">第三章 · 27 份资料如何变成资料地图</a></li><li><a href="ch4.html">第四章 · 从数字到证据型结论</a></li><li><a href="ch5.html">第五章 · 让挑剔总监先来质疑</a></li><li><a href="ch6.html">第六章 · 人工审定与待确认版</a></li></ul></div>
+    <div class="sidebar-group"><button class="sidebar-group-title">实战内容<svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 4l4 4-4 4"/></svg></button><ul class="sidebar-group-items"><li><a href="cases.html" class="active">案例分享</a></li><li><a href="eval.html">工作评测</a></li><li><a href="tasks.html">任务速查</a></li></ul></div>
+    <div class="sidebar-group"><button class="sidebar-group-title">深度<svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 4l4 4-4 4"/></svg></button><ul class="sidebar-group-items"><li><a href="methodology.html">方法论</a></li><li><a href="about.html">关于绿皮书</a></li></ul></div>
+    
+  </nav>
+</aside>
+<div class="sidebar-overlay"></div>
+<div class="theme-toggle" id="themeToggle" aria-label="切换暗黑模式" title="切换暗黑模式"><span class="icon-sun">☀️</span><span class="icon-moon">🌙</span></div>
+<div class="mascot" onclick="window.location.href='cases.html'"><img src="xiaochu.png" alt="小触"><div class="mascot-tooltip">回到案例集～</div></div>
+
+<div class="main">
+  <div class="pg-header"><div class="breadcrumb"><a href="index.html">首页</a> / <a href="cases.html">案例分享</a> / 产品需求到 PRD</div><div class="sec-label">案例 06 · Product Case · Evidence First</div><h1>从模糊需求到一期 PRD</h1><p>先判断真正要解决的工作麻烦，再让 AI 把证据、用户故事、范围和验收条件串成一套可评审的交付。</p></div>
+
+  <section class="sec" style="padding-top:44px">
+    <div class="case-detail-hero">
+      <div class="hero-panel">
+        <div class="status-row"><span class="status-chip fact">已形成三份候选交付</span><span class="status-chip pending">待产品负责人拍板</span></div>
+        <h2>客户回访之后，如何让“下一步”不再丢掉？</h2>
+        <p>这次任务表面上是“做一个客户回访记录和提醒功能”，但资料真正指向的是另一件事：沟通结束后，下一步动作没有被记录、被认领，也没有在到点时提醒，于是跟进断档。千问先把访谈、反馈、会议共识和技术边界放在一起判断，再生成预 PRD、一期 PRD 和供评审拍板的交付包。</p>
+      </div>
+      <div class="hero-note"><b>案例 06 / CANDIDATE DELIVERY</b><strong>AI 负责把意见变成可评审结构，人负责决定一期到底做什么。</strong><span>本案例使用合成脱敏资料。三份 Markdown 已生成候选版本，但 P-a～P-h 仍需产品负责人确认；一期不读取聊天记录、不做自动客户分层。</span></div>
+    </div>
+
+    <div class="delivery-steps">
+      <div class="delivery-step"><span class="step-no">STEP 01</span><strong>建立资料池</strong><span>背景、访谈、会议、反馈、约束</span></div>
+      <div class="delivery-step"><span class="step-no">STEP 02</span><strong>先判断问题</strong><span>把愿望还原成真实工作麻烦</span></div>
+      <div class="delivery-step"><span class="step-no">STEP 03</span><strong>搭证据链</strong><span>证据 → 用户故事 → 功能候选</span></div>
+      <div class="delivery-step"><span class="step-no">STEP 04</span><strong>划一期边界</strong><span>P0、P1 与明确不做</span></div>
+      <div class="delivery-step"><span class="step-no">STEP 05</span><strong>形成 PRD</strong><span>设计简报、页面状态与验收条件</span></div>
+      <div class="delivery-step"><span class="step-no">STEP 06</span><strong>二次 Review</strong><span>修正遗漏，交给产品负责人拍板</span></div>
+    </div>
+
+    <div class="evidence-card chapter-evidence">
+      <h3>8 张截图，记录一次需求如何被推演成 PRD</h3>
+      <p>证据 01 是第一轮任务指令；证据 02～05 是从任务理解、证据追踪到一期 PRD 的连续输出；证据 06 是二次 Review 指令；证据 07～08 是 AI 检查、修正并整理交付包的结果。原始文件编号保留在链接中，所有截图可点击放大。</p>
+      <div class="evidence-five">
+        <div class="evidence-slot"><b>输入资料</b><span>00～05：任务背景、访谈、评审纪要、脱敏反馈、能力约束和验收标准。</span></div>
+        <div class="evidence-slot"><b>使用指令</b><span>证据 01 先做需求判断；证据 06 对一期 PRD 做边界、映射和完整性 Review。</span></div>
+        <div class="evidence-slot"><b>AI 产出</b><span>证据 02～05：问题、角色、证据链、优先级、设计简报与一期 PRD。</span></div>
+        <div class="evidence-slot"><b>人工判断</b><span>确认 P-a～P-h；尤其是任务模型、提醒规则、权限和完成条件。</span></div>
+        <div class="evidence-slot"><b>最终结果</b><span>预 PRD、一期 PRD v1.1、确认交付包，状态仍为待评审。</span></div>
+      </div>
+      <div class="evidence-gallery case-prd-gallery">
+        <h4>第一轮：从资料池到一期 PRD</h4>
+        <p class="gallery-intro">这一轮先不急着写完整 PRD，而是先判断“真正的问题是什么”“哪些内容能进一期”。</p>
+        <div class="evidence-figures">
+          <figure class="evidence-figure"><a href="evidence/case-prd/5-1.png"><img src="evidence/case-prd/5-1.png" alt="客户回访记录和下次跟进提醒的第一轮任务指令" loading="lazy"></a><figcaption>01 · 第一轮指令：先判断问题、角色、证据链和一期边界</figcaption></figure>
+          <figure class="evidence-figure"><a href="evidence/case-prd/5-2.png"><img src="evidence/case-prd/5-2.png" alt="千问识别客户跟进需求真正要解决的问题" loading="lazy"></a><figcaption>02 · 任务理解：把“做回访记录”还原成“跟进闭环断掉”</figcaption></figure>
+          <figure class="evidence-figure"><a href="evidence/case-prd/5-3.png"><img src="evidence/case-prd/5-3.png" alt="千问建立证据到用户故事和功能候选的追踪表" loading="lazy"></a><figcaption>03 · 证据链：把反馈、用户故事、功能候选和优先级对上</figcaption></figure>
+          <figure class="evidence-figure"><a href="evidence/case-prd/5-4.png"><img src="evidence/case-prd/5-4.png" alt="千问输出预PRD和候选交付结构" loading="lazy"></a><figcaption>04 · 候选交付：需求摘要、用户故事、设计简报和 PRD 结构</figcaption></figure>
+          <figure class="evidence-figure"><a href="evidence/case-prd/5-5.png"><img src="evidence/case-prd/5-5.png" alt="千问输出客户回访提醒一期PRD初稿" loading="lazy"></a><figcaption>05 · 一期 PRD：页面、状态、权限和 P0 验收条件展开</figcaption></figure>
+        </div>
+      </div>
+      <div class="evidence-gallery case-prd-gallery">
+        <h4>第二轮：Review、修正与交付包</h4>
+        <p class="gallery-intro">第二轮不重新发明需求，而是检查边界有没有越线、用户故事能不能映射、待决策事项有没有被误写成结论。</p>
+        <div class="evidence-figures">
+          <figure class="evidence-figure"><a href="evidence/case-prd/5-6.png"><img src="evidence/case-prd/5-6.png" alt="要求千问复核并修正一期PRD的第二轮指令" loading="lazy"></a><figcaption>06 · Review 指令：检查边界、故事映射、未决事项和异常场景</figcaption></figure>
+          <figure class="evidence-figure"><a href="evidence/case-prd/5-7.png"><img src="evidence/case-prd/5-7.png" alt="千问对一期PRD进行质量检查并修正" loading="lazy"></a><figcaption>07 · QA 结果：发现编号映射问题，修正为自洽的 v1.1</figcaption></figure>
+          <figure class="evidence-figure"><a href="evidence/case-prd/5-8.png"><img src="evidence/case-prd/5-8.png" alt="千问输出最终确认交付包和一期PRD" loading="lazy"></a><figcaption>08 · 最终整理：预 PRD、一期 PRD 与产品负责人确认包</figcaption></figure>
+        </div>
+      </div>
+    </div>
+
+    <div class="evidence-card">
+      <h3>原始资料如何支撑这次推演</h3>
+      <p>以下 00～05 是本次资料池的组成部分。Markdown 可在当前页面内打开，脱敏反馈 CSV 保留下载入口；06 第一轮指令和全部原始资料也放在页面底部压缩包中。</p>
+      <div class="decision-grid">
+        <div class="decision-card"><h4>00 · 任务背景</h4><p>交代触发任务、工作麻烦、角色和期望交付。<a class="document-lightbox-trigger" href="evidence/case-prd/00-任务背景.md" data-document-title="00 · 任务背景">当前页阅读</a></p></div>
+        <div class="decision-card"><h4>01 · 访谈记录</h4><p>包含销售、客户成功、产品和技术的真实诉求与边界。<a class="document-lightbox-trigger" href="evidence/case-prd/01-访谈记录.md" data-document-title="01 · 访谈记录">当前页阅读</a></p></div>
+        <div class="decision-card"><h4>02 · 评审会议纪要</h4><p>区分已达成共识与尚未决定的事项。<a class="document-lightbox-trigger" href="evidence/case-prd/02-评审会议纪要.md" data-document-title="02 · 评审会议纪要">当前页阅读</a></p></div>
+        <div class="decision-card"><h4>03 · 用户反馈</h4><p>提供脱敏反馈数据，支持功能候选和优先级判断。<a href="evidence/case-prd/03-用户反馈-脱敏.csv" download>下载 CSV</a></p></div>
+        <div class="decision-card"><h4>04 · 现有能力与约束</h4><p>明确一期能复用什么、不能承诺什么。<a class="document-lightbox-trigger" href="evidence/case-prd/04-现有能力与约束.md" data-document-title="04 · 现有能力与约束">当前页阅读</a></p></div>
+        <div class="decision-card pending"><h4>05 · PRD 验收标准</h4><p>要求每条核心需求可追溯，P0 有用户故事和可执行验收条件。<a class="document-lightbox-trigger" href="evidence/case-prd/05-验收标准.md" data-document-title="05 · PRD 验收标准">当前页阅读</a></p></div>
+      </div>
+      <div class="text-proof">06 · 千问第一轮指令是推演入口，不作为最终产品结论。它随原始资料压缩包提供，读者可以按同一资料池复现这次任务判断。</div>
+    </div>
+
+    <div class="evidence-card">
+      <h3>实际交付物 · 三份 Markdown 交付</h3>
+      <p>这三份文档分别承担不同角色：预 PRD 解释判断过程，一期 PRD 进入评审正文，交付包把内容、状态和待拍板事项汇总在一起。点击后均在当前页面打开。</p>
+      <div class="case-deliverables">
+        <a class="deliverable-link document-lightbox-trigger" href="evidence/case-prd/客户回访跟进提醒-需求判断与预PRD.md" data-document-title="客户回访跟进提醒 · 需求判断与预 PRD"><b>需求判断与预 PRD</b><span>从真实问题、角色冲突、证据链和 P0/P1 取舍开始。</span><em>MARKDOWN / PRE-PRD / CANDIDATE</em></a>
+        <a class="deliverable-link document-lightbox-trigger" href="evidence/case-prd/客户回访记录与下次跟进提醒-一期PRD.md" data-document-title="客户回访记录与下次跟进提醒 · 一期 PRD"><b>客户回访记录与下次跟进提醒 · 一期 PRD</b><span>v1.1 评审稿，包含页面状态、权限、异常和 P0 验收条件。</span><em>MARKDOWN / PRD V1.1 / REVIEW DRAFT</em></a>
+        <a class="deliverable-link document-lightbox-trigger" href="evidence/case-prd/【请千问办公确认】交付包.md" data-document-title="请千问办公确认 · 一期交付包"><b>请千问办公确认 · 一期交付包</b><span>五件套索引、审计结论和 P-a～P-h 产品负责人确认清单。</span><em>MARKDOWN / DELIVERY PACKAGE / PENDING SIGN-OFF</em></a>
+      </div>
+    </div>
+
+    <div class="evidence-card warning">
+      <h3>人工验收：AI 已经整理好，不代表产品已经拍板</h3>
+      <div class="decision-grid">
+        <div class="decision-card pending"><h4>必须由产品负责人确认</h4><p>跟进记录是单条记录还是客户下的任务列表；是否允许多个未完成任务；提醒频率和关闭方式；完成时是否必须填写结果；提醒日期和编辑权限如何处理。</p></div>
+        <div class="decision-card pending"><h4>一期明确不能越过的边界</h4><p>不读取微信、钉钉或邮件聊天记录；不自动生成摘要；不做客户健康度和客户分层；不自动推荐回访周期；不承诺钉钉等外部通知；不做多人实时协同编辑。</p></div>
+      </div>
+      <div class="case-callout"><strong>当前验收状态：候选交付，待产品负责人确认。</strong><br>这里的“人工判断”不是再造一张截图，而是确认 AI 标出的决策点；只有 P-a～P-h 被拍板后，一期 PRD 才能进入正式评审或研发排期。</div>
+    </div>
+
+    <div class="scene" style="margin-top:56px">
+      <div class="sec-label">Case takeaway</div>
+      <h2 class="scene-title">好的 PRD，不是把所有意见写进去</h2>
+      <p class="scene-desc">它要把真实麻烦、证据、用户故事、一期边界和验收条件连起来；AI 可以把混乱整理成结构，但什么值得做、什么现在不做，仍然要由产品负责人拍板。</p>
+      <div class="closure-flow" aria-label="产品需求交付闭环"><span>原始资料</span><i>→</i><span>问题判断</span><i>→</i><span>证据追踪</span><i>→</i><span>一期 PRD</span><i>→</i><span>Review 修正</span><i>→</i><span>人工拍板</span></div>
+      <a class="proof-link" href="cases.html">返回案例集，继续查看其他待验证选题 →</a>
+    </div>
+
+    <div class="evidence-card">
+      <h3>附件 · 00～06 原始资料包</h3>
+      <p>包含本案例的任务背景、访谈记录、评审会议纪要、脱敏用户反馈、现有能力与约束、验收标准和第一轮任务指令。下载后可把同一资料池放入千问办公复现。</p>
+      <div class="case-deliverables" style="grid-template-columns:minmax(0,1fr)"><a class="deliverable-link" href="evidence/case-prd/00-06原始文档压缩.zip" download><b>下载 00～06 原始文档压缩包</b><span>案例复现用资料池：6 份基础资料 + 1 份第一轮推演指令。</span><em>ZIP / SOURCE MATERIALS / REPRODUCIBLE</em></a></div>
+    </div>
+  </section>
+
+  <footer class="footer"><div class="footer-in"><div class="footer-left"><div class="sidebar-logo" style="font-size:14px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>千问办公绿皮书</div><p>以真实工作为主线，把 AI 协作经验沉淀为可复用的工作流。持续更新中。</p></div><div class="footer-links"><div class="footer-col"><h5>内容</h5><ul><li><a href="path.html">阅读路径</a></li><li><a href="cases.html">案例分享</a></li><li><a href="eval.html">工作评测</a></li><li><a href="tasks.html">任务速查</a></li></ul></div><div class="footer-col"><h5>资源</h5><ul><li><a href="https://qwenwork.cn/docs" target="_blank">官方文档</a></li><li><a href="toc.html">完整目录</a></li><li><a href="https://qwenwork.cn" target="_blank">下载千问办公</a></li></ul></div><div class="footer-col"><h5>社区</h5><ul><li><a href="about.html">关于绿皮书</a></li><li><a href="#">反馈建议</a></li><li><a href="#">贡献指南</a></li></ul></div></div></div></footer>
+</div>
+<script src="main.js"></script>
+</body>
+</html>

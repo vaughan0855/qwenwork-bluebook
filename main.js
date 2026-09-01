@@ -69,10 +69,10 @@
     if(node){node.textContent=text}
   }
   if(current==='index.html'){
-    document.title='个人工作提效手册 — 千问办公绿皮书';
-    setText('.pg-header h1','个人工作提效手册');
-    setText('.hero .hero-badge','个人工作提效手册 · 持续更新中');
-    setText('.hero > h1','把工作做完，比学会更多功能重要');
+    document.title='个人工作AI提效手册 — 千问办公绿皮书';
+    setText('.pg-header h1','个人工作AI提效手册');
+    setText('.hero .hero-badge','个人工作AI提效手册 · 持续更新中');
+    setText('.hero > h1','GTD+AI，高效搞定复杂工作');
     setText('.hero .hero-sub','默认你已经会使用千问办公。这里不从软件教程开始，而从一件真实的工作麻烦开始，看它怎样变成可以交出去的结果。');
     setText('.hero .evidence-card h3','从真实麻烦，到可以交出去的结果');
     setText('.hero .evidence-card p','先看小明的一次交付，再看其他工作场景。每个案例都留下做事过程、关键判断和最后交出的东西。');

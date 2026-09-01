@@ -44,18 +44,56 @@
   var sidebarHTML=
     '<div class="sidebar-header"><a href="index.html" class="sidebar-logo"><img class="brand-logo" src="qwenwork-logo.png" alt="">千问办公绿皮书</a></div>'+
     '<nav class="sidebar-nav">'+
-      group('开始','<li><a href="index.html">首页</a></li><li><a href="toc.html">完整目录</a></li>')+
-      group('阅读路径','<li><a href="path.html">路径总览</a></li><li><a href="phase-1.html">Phase 1 · 新手入门</a></li><li><a href="phase-2.html">Phase 2 · 核心功能</a></li><li><a href="phase-3.html">Phase 3 · 常见任务与场景实战</a></li>')+
+      group('开始','<li><a href="index.html">首页</a></li>')+
       group('实战案例分享',caseItems)+
-      group('任务速查','<li><a href="tasks.html">按任务找到入口</a></li>')+
-      group('深度','<li><a href="methodology.html">方法论</a></li><li><a href="about.html">关于绿皮书</a></li>')+
+      group('按工作找结果','<li><a href="tasks.html">任务速查</a></li>')+
+      group('方法论','<li><a href="methodology.html">把工作做完的方法</a></li>')+
+      group('官方教程 · 补充','<li><a href="https://learn.qwenwork.host/docs/getting-started/intro.html" target="_blank" rel="noopener">官方教程总览 ↗</a></li><li><a href="phase-1.html">Phase 1 · 新手入门</a></li><li><a href="phase-2.html">Phase 2 · 核心功能</a></li><li><a href="phase-3.html">Phase 3 · 常见任务与场景实战</a></li><li><a href="toc.html">完整目录</a></li><li><a href="path.html">路径总览</a></li>')+
+      group('关于与贡献','<li><a href="about.html">关于绿皮书</a></li>')+
     '</nav>';
   var sidebar=document.querySelector('.sidebar');
   if(sidebar){sidebar.innerHTML=sidebarHTML}
 
   var footer=document.querySelector('footer.footer');
   if(footer){
-    footer.innerHTML='<div class="footer-in"><div class="footer-left"><a class="sidebar-logo" href="index.html"><img class="brand-logo" src="qwenwork-logo.png" alt="">千问办公绿皮书</a><p>以真实工作为主线，把 AI 协作经验沉淀为可复用的工作流。持续更新中。</p></div><div class="footer-links"><div class="footer-col"><h5>内容</h5><ul><li><a href="path.html">阅读路径</a></li><li><a href="cases.html">案例分享</a></li><li><a href="tasks.html">任务速查</a></li></ul></div><div class="footer-col"><h5>资源</h5><ul><li><a href="https://learn.qwenwork.host/docs/getting-started/intro.html" target="_blank" rel="noopener">官方文档</a></li><li><a href="toc.html">完整目录</a></li><li><a href="https://qwenwork.cn" target="_blank" rel="noopener">下载千问办公</a></li></ul></div><div class="footer-col"><h5>社区</h5><ul><li><a href="about.html">关于绿皮书</a></li><li><a href="https://github.com/vaughan0855/qwenwork-bluebook/issues" target="_blank" rel="noopener">反馈建议</a></li><li><a href="https://github.com/vaughan0855/qwenwork-bluebook" target="_blank" rel="noopener">参与贡献</a></li></ul></div></div></div>';
+    footer.innerHTML='<div class="footer-in"><div class="footer-left"><a class="sidebar-logo" href="index.html"><img class="brand-logo" src="qwenwork-logo.png" alt="">千问办公绿皮书</a><p>把真实工作的做法沉淀为可复用的步骤、模板和检查清单。</p></div><div class="footer-links"><div class="footer-col"><h5>内容</h5><ul><li><a href="cases.html">案例分享</a></li><li><a href="tasks.html">任务速查</a></li><li><a href="methodology.html">方法论</a></li></ul></div><div class="footer-col"><h5>补充</h5><ul><li><a href="https://learn.qwenwork.host/docs/getting-started/intro.html" target="_blank" rel="noopener">官方教程 ↗</a></li><li><a href="toc.html">完整目录</a></li><li><a href="path.html">路径总览</a></li></ul></div><div class="footer-col"><h5>关于</h5><ul><li><a href="about.html">关于绿皮书</a></li><li><a href="https://github.com/vaughan0855/qwenwork-bluebook/issues" target="_blank" rel="noopener">反馈建议</a></li><li><a href="https://github.com/vaughan0855/qwenwork-bluebook" target="_blank" rel="noopener">参与贡献</a></li></ul></div></div></div>';
+  }
+})();
+
+// Reader-first copy: make the public-facing entry explain the work outcome,
+// while the detailed methodology remains available deeper in the site.
+(function(){
+  var current=(window.location.pathname.split('/').pop() || 'index.html').split('#')[0];
+  function setText(selector,text){
+    var node=document.querySelector(selector);
+    if(node){node.textContent=text}
+  }
+  if(current==='index.html'){
+    document.title='个人工作提效手册 — 千问办公绿皮书';
+    setText('.pg-header h1','个人工作提效手册');
+    setText('.hero .hero-badge','个人工作提效手册 · 持续更新中');
+    setText('.hero > h1','把工作做完，比学会更多功能重要');
+    setText('.hero .hero-sub','默认你已经会使用千问办公。这里不从软件教程开始，而从一件真实的工作麻烦开始，看它怎样变成可以交出去的结果。');
+    setText('.hero .evidence-card h3','从真实麻烦，到可以交出去的结果');
+    setText('.hero .evidence-card p','先看小明的一次交付，再看其他工作场景。每个案例都留下做事过程、关键判断和最后交出的东西。');
+    setText('.hero .hero-acts .btn-d','先看黄金案例');
+    setText('.hero .hero-acts .btn-g','按工作结果找案例');
+    setText('.main > .sec.sec-b:first-of-type .sec-label','一件工作怎么推进');
+    setText('.main > .sec.sec-b:first-of-type .sec-title','从接到活，到把结果交出去');
+    setText('.main > .sec.sec-b:first-of-type .sec-desc','这不是软件功能清单，而是一条普通职场人可以反复使用的做事顺序。');
+    setText('.main > .sec.sec-b:nth-of-type(2) .sec-label','案例是正文，方法是注释');
+    setText('.main > .sec.sec-b:nth-of-type(2) .sec-title','先看别人怎样把活做完');
+    setText('.main > .sec.sec-b:nth-of-type(2) .sec-desc','先从真实工作现场进入，再回头拆解哪些事情可以交给千问，哪些地方必须由自己判断。');
+  }
+  if(current==='cases.html'){
+    document.title='个人工作提效案例 — 千问办公绿皮书';
+    setText('.pg-header h1','个人工作提效案例');
+    setText('.pg-header p','不按软件功能分类，而按真实工作结果进入：先看麻烦，再看过程，最后看交付。');
+    setText('.main > .sec > .sec-desc','这里收录已经留下过程证据的工作案例。每个案例都从一个具体麻烦开始，走到一个可以检查、可以交接、可以继续使用的结果。');
+    setText('.case-method-board .sec-label','案例里的工作分工');
+    setText('.case-method-board h2','每个案例都在练习：什么由你来做，什么可以先交给千问？');
+    setText('.case-method-board .case-method-intro','这不是给人贴标签，而是帮助你在开始一件工作前先分清：哪些是重复劳动，哪些是业务判断，哪些责任不能交出去。');
+    setText('.case-callout strong','怎么开始：');
   }
 })();
 
@@ -107,7 +145,7 @@ document.querySelectorAll('.sidebar-group-title').forEach(function(btn){
       var badge=body.querySelector('.case-badge');
       if(badge){badge.insertAdjacentHTML('afterend','<span class="case-method-tag">主方法 · '+data.method+'</span>')}
       var meta=body.querySelector('.case-meta');
-      if(meta){meta.insertAdjacentHTML('beforebegin','<div class="case-role-note"><span><b>AI</b>'+data.ai+'</span><span><b>人</b>'+data.human+'</span></div>')}
+      if(meta){meta.insertAdjacentHTML('beforebegin','<div class="case-role-note"><span><b>千问</b>'+data.ai+'</span><span><b>你</b>'+data.human+'</span></div>')}
     });
   }
 
@@ -116,7 +154,7 @@ document.querySelectorAll('.sidebar-group-title').forEach(function(btn){
     if(!data || document.querySelector('.case-human-ai-card')){return}
     var card=document.createElement('section');
     card.className='case-human-ai-card';
-    card.innerHTML='<div class="case-human-ai-head"><div><div class="sec-label">主方法 · 人机分工</div><h2>'+data.method+'</h2></div><span class="status-chip">个人工作提效</span></div><div class="case-human-ai-grid"><div><b>AI 主做</b><p>'+data.ai+'</p></div><div><b>人主做</b><p>'+data.human+'</p></div><div><b>AI 不能替代</b><p>责任承担、权限授权、专业判断和业务承诺。</p></div><div><b>最终交付</b><p>'+data.delivery+'</p></div></div>';
+    card.innerHTML='<div class="case-human-ai-head"><div><div class="sec-label">这件事怎么分工</div><h2>'+data.method+'</h2></div><span class="status-chip">个人工作提效</span></div><div class="case-human-ai-grid"><div><b>千问可以先接手</b><p>'+data.ai+'</p></div><div><b>你需要判断</b><p>'+data.human+'</p></div><div><b>不能交给软件</b><p>责任承担、权限授权、专业判断和业务承诺。</p></div><div><b>最后要交出</b><p>'+data.delivery+'</p></div></div>';
     var hero=document.querySelector('.case-detail-hero');
     var section=hero ? hero.parentNode : document.querySelector('.main');
     if(hero){section.insertBefore(card,hero.nextSibling)}else if(section){section.insertBefore(card,section.querySelector('.pg-header') ? section.querySelector('.pg-header').nextSibling : section.firstChild)}
@@ -127,7 +165,7 @@ document.querySelectorAll('.sidebar-group-title').forEach(function(btn){
     if(!data || document.querySelector('.chapter-method-card')){return}
     var card=document.createElement('section');
     card.className='chapter-method-card';
-    card.innerHTML='<div class="sec-label">本章方法定位</div><h2>'+data.stage+'</h2><div class="chapter-method-grid"><div><b>交付链位置</b><span>'+data.stage+'，把上一状态推进到下一状态。</span></div><div><b>AI 主做</b><span>'+data.ai+'</span></div><div><b>人必须判断</b><span>'+data.human+'</span></div><div><b>当前状态</b><span>'+data.state+'</span></div></div><div class="chapter-method-next"><b>下一步</b><span>'+data.next+'</span></div>';
+    card.innerHTML='<div class="sec-label">本章怎么把事情往前推</div><h2>'+data.stage+'</h2><div class="chapter-method-grid"><div><b>这一步要推进什么</b><span>'+data.stage+'，把上一状态推进到下一状态。</span></div><div><b>千问办公先处理</b><span>'+data.ai+'</span></div><div><b>你必须判断</b><span>'+data.human+'</span></div><div><b>当前做到哪了</b><span>'+data.state+'</span></div></div><div class="chapter-method-next"><b>接下来</b><span>'+data.next+'</span></div>';
     var header=document.querySelector('.pg-header');
     if(header){header.insertAdjacentElement('afterend',card)}
   }

@@ -136,6 +136,39 @@ document.querySelectorAll('.sidebar-group-title').forEach(function(btn){
   };
   var current=(window.location.pathname.split('/').pop() || 'index.html').split('#')[0];
 
+  function replaceText(root,replacements){
+    if(!root){return}
+    var walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
+    var nodes=[];
+    var node;
+    while(node=walker.nextNode()){nodes.push(node)}
+    nodes.forEach(function(textNode){
+      var value=textNode.nodeValue;
+      replacements.forEach(function(pair){value=value.split(pair[0]).join(pair[1])});
+      textNode.nodeValue=value;
+    });
+  }
+
+  function softenCaseLanguage(){
+    if(caseData[current]){
+      replaceText(document.querySelector('.case-detail-hero'),[
+        ['已形成 AI 研究交付','已形成研究交付'],
+        ['AI 做了什么，人还要决定什么','哪些步骤可以先交给千问，哪些必须由你拍板'],
+        ['AI 已经完成什么，人还必须完成什么','哪些已经整理好，哪些还要由你确认'],
+        ['AI 负责','千问先处理'],
+        ['人负责','你负责判断'],
+        ['AI 可以帮忙定位','千问可以先定位']
+      ])
+    }
+    if(current==='cases.html'){
+      replaceText(document.querySelector('.case-method-board'),[
+        ['AI 主做：','千问先接手：'],
+        ['人主做：','你来判断：'],
+        ['案例方法线','这件事怎么做']
+      ])
+    }
+  }
+
   function addCaseOverviewCards(){
     document.querySelectorAll('.case-card-link').forEach(function(card){
       var href=(card.getAttribute('href')||'').split('#')[0];
@@ -173,6 +206,7 @@ document.querySelectorAll('.sidebar-group-title').forEach(function(btn){
   addCaseOverviewCards();
   addCaseDetailCard();
   addChapterMethodCard();
+  softenCaseLanguage();
 })();
 
 // Mobile sidebar toggle

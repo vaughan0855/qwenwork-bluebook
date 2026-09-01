@@ -17,6 +17,48 @@
   }
 })();
 
+// Canonical site chrome: keep every page on the same navigation and footer
+// while allowing the content pages to remain static and independently linkable.
+(function(){
+  var chevron='<svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4l4 4-4 4"/></svg>';
+  var caseItems=[
+    '<li><a href="cases.html">案例 01 · 小明的交付升级记</a><ul class="sidebar-sublist">'+
+      '<li><a href="ch0.html">序章 · 为什么打开千问办公</a></li>'+
+      '<li><a href="ch1.html">第一章 · 先让资料池开口</a></li>'+
+      '<li><a href="ch2.html">第二章 · 这个事情要交付什么</a></li>'+
+      '<li><a href="ch3.html">第三章 · 27 份资料如何变成资料地图</a></li>'+
+      '<li><a href="ch4.html">第四章 · 从数字到证据型结论</a></li>'+
+      '<li><a href="ch5.html">第五章 · 让挑剔总监先来质疑</a></li>'+
+      '<li><a href="ch6.html">第六章 · 人工审定与待确认版</a></li>'+
+    '</ul></li>',
+    '<li><a href="case-prospectus.html">案例 02 · 宇树招股书数据提取与交叉验证</a></li>',
+    '<li><a href="case-short-video.html">案例 03 · 短视频分镜脚本 PPT</a></li>',
+    '<li><a href="case-dashboard.html">案例 04 · 月度经营数据仪表盘</a></li>',
+    '<li><a href="case-competitor-monitor.html">案例 05 · 竞品监控与钉钉推送</a></li>',
+    '<li><a href="case-prd.html">案例 06 · 产品需求到 PRD</a></li>',
+    '<li><a href="case-nda-review.html">案例 07 · NDA 保密协议快速审查</a></li>'
+  ].join('');
+  function group(title,items){
+    return '<div class="sidebar-group"><button class="sidebar-group-title" type="button">'+title+chevron+'</button><ul class="sidebar-group-items">'+items+'</ul></div>';
+  }
+  var sidebarHTML=
+    '<div class="sidebar-header"><a href="index.html" class="sidebar-logo"><img class="brand-logo" src="qwenwork-logo.png" alt="">千问办公绿皮书</a></div>'+
+    '<nav class="sidebar-nav">'+
+      group('开始','<li><a href="index.html">首页</a></li><li><a href="toc.html">完整目录</a></li>')+
+      group('阅读路径','<li><a href="path.html">路径总览</a></li><li><a href="phase-1.html">Phase 1 · 新手入门</a></li><li><a href="phase-2.html">Phase 2 · 核心功能</a></li><li><a href="phase-3.html">Phase 3 · 常见任务与场景实战</a></li>')+
+      group('实战案例分享',caseItems)+
+      group('任务速查','<li><a href="tasks.html">按任务找到入口</a></li>')+
+      group('深度','<li><a href="methodology.html">方法论</a></li><li><a href="about.html">关于绿皮书</a></li>')+
+    '</nav>';
+  var sidebar=document.querySelector('.sidebar');
+  if(sidebar){sidebar.innerHTML=sidebarHTML}
+
+  var footer=document.querySelector('footer.footer');
+  if(footer){
+    footer.innerHTML='<div class="footer-in"><div class="footer-left"><a class="sidebar-logo" href="index.html"><img class="brand-logo" src="qwenwork-logo.png" alt="">千问办公绿皮书</a><p>以真实工作为主线，把 AI 协作经验沉淀为可复用的工作流。持续更新中。</p></div><div class="footer-links"><div class="footer-col"><h5>内容</h5><ul><li><a href="path.html">阅读路径</a></li><li><a href="cases.html">案例分享</a></li><li><a href="tasks.html">任务速查</a></li></ul></div><div class="footer-col"><h5>资源</h5><ul><li><a href="https://learn.qwenwork.host/docs/getting-started/intro.html" target="_blank" rel="noopener">官方文档</a></li><li><a href="toc.html">完整目录</a></li><li><a href="https://qwenwork.cn" target="_blank" rel="noopener">下载千问办公</a></li></ul></div><div class="footer-col"><h5>社区</h5><ul><li><a href="about.html">关于绿皮书</a></li><li><a href="https://github.com/vaughan0855/qwenwork-bluebook/issues" target="_blank" rel="noopener">反馈建议</a></li><li><a href="https://github.com/vaughan0855/qwenwork-bluebook" target="_blank" rel="noopener">参与贡献</a></li></ul></div></div></div>';
+  }
+})();
+
 // Sidebar group collapse/expand
 document.querySelectorAll('.sidebar-group-title').forEach(function(btn){
   btn.addEventListener('click',function(){

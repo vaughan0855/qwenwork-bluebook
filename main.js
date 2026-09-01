@@ -150,6 +150,30 @@ document.querySelectorAll('.sidebar-group-title').forEach(function(btn){
   }
 
   function softenCaseLanguage(){
+    var readerReplacements=[
+      ['这本绿皮书要解决的，不是“AI 有多神奇”','这本绿皮书要解决的，不是“工具有多神奇”'],
+      ['先别让 AI 替你写答案','先别急着让工具替你写答案'],
+      ['AI 可以帮你分拣','千问可以帮你分拣'],
+      ['AI 可以帮忙定位','千问可以帮忙定位'],
+      ['让 AI 把','让千问把'],
+      ['AI 来当总监','千问来当总监'],
+      ['调动 AI','调动工具'],
+      ['AI 给我的是','千问给我的是'],
+      ['AI 做了什么，人还要决定什么','哪些步骤可以先交给千问，哪些必须由你拍板'],
+      ['AI 已经完成什么，人还必须完成什么','哪些已经整理好，哪些还要由你确认'],
+      ['AI 主做，人验收','千问先处理，你来验收'],
+      ['AI 自我质疑','提前做一次压力测试'],
+      ['真实推演证据','实际过程截图'],
+      ['AI 初版','第一版'],
+      ['AI 模拟','模拟'],
+      ['AI 负责','千问先处理'],
+      ['AI 产出','千问返回的结果'],
+      ['AI 主做','千问先接手'],
+      ['人主做','你来判断']
+    ];
+    if(caseData[current] || chapterData[current]){
+      replaceText(document.querySelector('.main'),readerReplacements)
+    }
     if(caseData[current]){
       replaceText(document.querySelector('.case-detail-hero'),[
         ['已形成 AI 研究交付','已形成研究交付'],

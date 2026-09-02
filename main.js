@@ -48,7 +48,7 @@
       group('实战案例分享',caseItems)+
       group('按工作找结果','<li><a href="tasks.html">任务速查</a></li>')+
       group('方法论','<li><a href="methodology.html">把工作做完的方法</a></li>')+
-      group('官方教程 · 补充','<li><a href="https://learn.qwenwork.host/docs/getting-started/intro.html" target="_blank" rel="noopener">官方教程总览 ↗</a></li><li><a href="phase-1.html">Phase 1 · 新手入门</a></li><li><a href="phase-2.html">Phase 2 · 核心功能</a></li><li><a href="phase-3.html">Phase 3 · 常见任务与场景实战</a></li><li><a href="toc.html">完整目录</a></li><li><a href="path.html">路径总览</a></li>')+
+      group('补充资源','<li><a href="toc.html">完整目录</a></li><li><a href="https://learn.qwenwork.host/docs/getting-started/intro.html" target="_blank" rel="noopener">官方新手入门 ↗</a></li><li><a href="path.html">路径总览</a></li>')+
       group('关于与贡献','<li><a href="about.html">关于绿皮书</a></li>')+
     '</nav>';
   var sidebar=document.querySelector('.sidebar');
@@ -94,6 +94,28 @@
     setText('.case-method-board h2','每个案例都在练习：什么由你来做，什么可以先交给千问？');
     setText('.case-method-board .case-method-intro','这不是给人贴标签，而是帮助你在开始一件工作前先分清：哪些是重复劳动，哪些是业务判断，哪些责任不能交出去。');
     setText('.case-callout strong','怎么开始：');
+  }
+  if(current==='path.html'){
+    document.title='从一件工作开始 — 千问办公绿皮书';
+    setText('.pg-header h1','从一件工作开始');
+    setText('.pg-header p','默认你已经会使用千问办公。需要补基础时，去官方新手入门；想看全量对应关系，打开完整目录。');
+    setText('.main > .sec > .sec-desc','这页只保留两个补充入口：一个解决“怎么开始用”，一个查看官方功能与任务的完整目录。真正的正文，请直接进入案例。');
+    var pathCards=document.querySelectorAll('.main > .sec .card-grid.c4 .card');
+    if(pathCards.length>=4){
+      pathCards[0].parentNode.classList.add('path-choices');
+      pathCards[2].style.display='none';
+      pathCards[3].style.display='none';
+      setText('.main > .sec .card-grid.c4 .card:nth-child(1) .card-step','补基础');
+      setText('.main > .sec .card-grid.c4 .card:nth-child(1) h3','官方新手入门');
+      setText('.main > .sec .card-grid.c4 .card:nth-child(1) p','如果你还不熟悉千问办公，从官方页面完成登录、进入和第一次任务提交。');
+      setText('.main > .sec .card-grid.c4 .card:nth-child(1) a','进入官方新手入门 ↗');
+      setText('.main > .sec .card-grid.c4 .card:nth-child(2) .card-step','查全量');
+      setText('.main > .sec .card-grid.c4 .card:nth-child(2) h3','完整目录 · 核心功能');
+      setText('.main > .sec .card-grid.c4 .card:nth-child(2) p','查看官方功能、常见任务与本站案例之间的对应关系。');
+      setText('.main > .sec .card-grid.c4 .card:nth-child(2) a','打开完整目录 →');
+      pathCards[0].querySelector('a').classList.add('btn-d');
+      pathCards[1].querySelector('a').classList.add('btn-g');
+    }
   }
 })();
 

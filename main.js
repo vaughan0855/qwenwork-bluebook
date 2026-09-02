@@ -23,9 +23,9 @@
   var chevron='<svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4l4 4-4 4"/></svg>';
   var caseItems=[
     '<li><a href="cases.html">案例 01 · 小明的交付升级记</a><ul class="sidebar-sublist">'+
-      '<li><a href="ch0.html">序章 · 为什么打开千问办公</a></li>'+
+      '<li><a href="ch0.html">序章 · 小明为什么打开千问办公</a></li>'+
       '<li><a href="ch1.html">第一章 · 先让资料池开口</a></li>'+
-      '<li><a href="ch2.html">第二章 · 这个事情要交付什么</a></li>'+
+      '<li><a href="ch2.html">第二章 · “这个事情”到底要交付什么</a></li>'+
       '<li><a href="ch3.html">第三章 · 27 份资料如何变成资料地图</a></li>'+
       '<li><a href="ch4.html">第四章 · 从数字到证据型结论</a></li>'+
       '<li><a href="ch5.html">第五章 · 让挑剔总监先来质疑</a></li>'+
@@ -48,15 +48,15 @@
       group('实战案例分享',caseItems)+
       group('按工作找结果','<li><a href="tasks.html">任务速查</a></li>')+
       group('方法论','<li><a href="methodology.html">把工作做完的方法</a></li>')+
-      group('补充资源','<li><a href="toc.html">完整目录</a></li><li><a href="https://learn.qwenwork.host/docs/getting-started/intro.html" target="_blank" rel="noopener">官方新手入门 ↗</a></li><li><a href="path.html">路径总览</a></li>')+
-      group('关于与贡献','<li><a href="about.html">关于绿皮书</a></li>')+
+      group('补充资源','<li><a href="toc.html">完整目录</a></li><li><a href="https://learn.qwenwork.host/docs/getting-started/intro.html" target="_blank" rel="noopener">官方文档知识库 ↗</a></li>')+
+      group('关于与贡献','<li><a href="about.html">关于绿皮书</a></li><li><a href="contribute.html">参与 GitHub 贡献</a></li>')+
     '</nav>';
   var sidebar=document.querySelector('.sidebar');
   if(sidebar){sidebar.innerHTML=sidebarHTML}
 
   var footer=document.querySelector('footer.footer');
   if(footer){
-    footer.innerHTML='<div class="footer-in"><div class="footer-left"><a class="sidebar-logo" href="index.html"><img class="brand-logo" src="qwenwork-logo.png" alt="">千问办公绿皮书</a><p>把真实工作的做法沉淀为可复用的步骤、模板和检查清单。</p></div><div class="footer-links"><div class="footer-col"><h5>内容</h5><ul><li><a href="cases.html">案例分享</a></li><li><a href="tasks.html">任务速查</a></li><li><a href="methodology.html">方法论</a></li></ul></div><div class="footer-col"><h5>补充</h5><ul><li><a href="https://learn.qwenwork.host/docs/getting-started/intro.html" target="_blank" rel="noopener">官方教程 ↗</a></li><li><a href="toc.html">完整目录</a></li><li><a href="path.html">路径总览</a></li></ul></div><div class="footer-col"><h5>关于</h5><ul><li><a href="about.html">关于绿皮书</a></li><li><a href="https://github.com/vaughan0855/qwenwork-bluebook/issues" target="_blank" rel="noopener">反馈建议</a></li><li><a href="https://github.com/vaughan0855/qwenwork-bluebook" target="_blank" rel="noopener">参与贡献</a></li></ul></div></div></div>';
+    footer.innerHTML='<div class="footer-in"><div class="footer-left"><a class="sidebar-logo" href="index.html"><img class="brand-logo" src="qwenwork-logo.png" alt="">千问办公绿皮书</a><p>把真实工作的做法沉淀为可复用的步骤、模板和检查清单。</p></div><div class="footer-links"><div class="footer-col"><h5>内容</h5><ul><li><a href="cases.html">案例分享</a></li><li><a href="tasks.html">任务速查</a></li><li><a href="methodology.html">方法论</a></li></ul></div><div class="footer-col"><h5>补充</h5><ul><li><a href="https://learn.qwenwork.host/docs/getting-started/intro.html" target="_blank" rel="noopener">官方文档知识库 ↗</a></li><li><a href="toc.html">完整目录</a></li></ul></div><div class="footer-col"><h5>关于</h5><ul><li><a href="about.html">关于绿皮书</a></li><li><a href="https://github.com/vaughan0855/qwenwork-bluebook" target="_blank" rel="noopener">参与 GitHub 贡献 ↗</a></li></ul></div></div></div>';
   }
 })();
 
@@ -84,6 +84,13 @@
     setText('.main > .sec.sec-b:nth-of-type(2) .sec-label','案例是正文，方法是注释');
     setText('.main > .sec.sec-b:nth-of-type(2) .sec-title','先看别人怎样把活做完');
     setText('.main > .sec.sec-b:nth-of-type(2) .sec-desc','先从真实工作现场进入，再回头拆解哪些事情可以交给千问，哪些地方必须由自己判断。');
+    if(!document.querySelector('.contribution-section')){
+      var contribution=document.createElement('section');
+      contribution.className='sec sec-b contribution-section';
+      contribution.innerHTML='<div class="sec-label">开放维护</div><h2 class="sec-title">这本手册，也欢迎一起改进</h2><p class="sec-desc">绿皮书不是封闭的产品说明书。你可以在 GitHub 查看源码、指出错误，或提交 Pull Request，把自己的真实工作案例补进来。</p><div class="card-grid c3"><div class="card"><div class="card-step s1">发现问题</div><h3>把问题说清楚</h3><p>打开贡献说明页，按页面、位置、现象和建议补充信息，让问题可以被复现。</p></div><div class="card"><div class="card-step s2">直接修改</div><h3>提交 Pull Request</h3><p>Fork 仓库，修改 HTML、CSS 或案例素材，再提交 PR 说明改了什么。</p></div><div class="card"><div class="card-step s3">共同维护</div><h3>让案例继续生长</h3><p>经审阅后合并，新的过程证据、模板和修订记录会回到网站。</p></div></div><p class="hero-acts"><a class="btn-d" href="contribute.html">查看 GitHub 贡献说明 →</a></p>';
+      var main=document.querySelector('.main');
+      if(main){main.appendChild(contribution)}
+    }
   }
   if(current==='cases.html'){
     document.title='个人工作提效案例 — 千问办公绿皮书';
@@ -95,26 +102,28 @@
     setText('.case-method-board .case-method-intro','这不是给人贴标签，而是帮助你在开始一件工作前先分清：哪些是重复劳动，哪些是业务判断，哪些责任不能交出去。');
     setText('.case-callout strong','怎么开始：');
   }
-  if(current==='path.html'){
-    document.title='从一件工作开始 — 千问办公绿皮书';
-    setText('.pg-header h1','从一件工作开始');
-    setText('.pg-header p','默认你已经会使用千问办公。需要补基础时，去官方新手入门；想看全量对应关系，打开完整目录。');
-    setText('.main > .sec > .sec-desc','这页只保留两个补充入口：一个解决“怎么开始用”，一个查看官方功能与任务的完整目录。真正的正文，请直接进入案例。');
-    var pathCards=document.querySelectorAll('.main > .sec .card-grid.c4 .card');
-    if(pathCards.length>=4){
-      pathCards[0].parentNode.classList.add('path-choices');
-      pathCards[2].style.display='none';
-      pathCards[3].style.display='none';
-      setText('.main > .sec .card-grid.c4 .card:nth-child(1) .card-step','补基础');
-      setText('.main > .sec .card-grid.c4 .card:nth-child(1) h3','官方新手入门');
-      setText('.main > .sec .card-grid.c4 .card:nth-child(1) p','如果你还不熟悉千问办公，从官方页面完成登录、进入和第一次任务提交。');
-      setText('.main > .sec .card-grid.c4 .card:nth-child(1) a','进入官方新手入门 ↗');
-      setText('.main > .sec .card-grid.c4 .card:nth-child(2) .card-step','查全量');
-      setText('.main > .sec .card-grid.c4 .card:nth-child(2) h3','完整目录 · 核心功能');
-      setText('.main > .sec .card-grid.c4 .card:nth-child(2) p','查看官方功能、常见任务与本站案例之间的对应关系。');
-      setText('.main > .sec .card-grid.c4 .card:nth-child(2) a','打开完整目录 →');
-      pathCards[0].querySelector('a').classList.add('btn-d');
-      pathCards[1].querySelector('a').classList.add('btn-g');
+  if(current==='toc.html'){
+    document.title='完整目录 — 千问办公绿皮书';
+    setText('.pg-header p','先从实战案例进入；需要补基础时，再按需查阅官方文档知识库。');
+    var tocSection=document.querySelector('.main > .sec');
+    if(tocSection && !tocSection.dataset.reordered){
+      var intro=tocSection.querySelector('.evidence-card');
+      var groups=Array.prototype.slice.call(tocSection.querySelectorAll('.toc-group'));
+      var caseGroup=groups.find(function(group){return /本站实战案例/.test(group.textContent)});
+      if(caseGroup){
+        tocSection.insertBefore(caseGroup,intro || groups[0] || null);
+        var caseTitle=caseGroup.querySelector('h3');
+        if(caseTitle){caseTitle.firstChild.textContent='实战案例分享 '}
+        var caseNote=caseGroup.querySelector('.toc-note');
+        if(caseNote){caseNote.textContent='这里是本站的正文入口：从真实工作麻烦出发，沿着资料、判断、千问协作和可验收交付走完一遍。'}
+      }
+      if(intro){
+        var introTitle=intro.querySelector('h3');
+        if(introTitle){introTitle.textContent='官方文档知识库：按需补基础'}
+        var introText=intro.querySelector('p');
+        if(introText){introText.textContent='官方文档负责会随产品更新的安装、功能和操作路径；本站负责保留真实任务、原始资料、对话证据、交付物与人工验收。'}
+      }
+      tocSection.dataset.reordered='true';
     }
   }
 })();
@@ -148,13 +157,13 @@ document.querySelectorAll('.sidebar-group-title').forEach(function(btn){
     'case-nda-review.html':{method:'风险分级与人工闸门',ai:'定位条款、分级风险、整理问题和谈判准备材料。',human:'确认法律风险、谈判底线、专业意见和最终签署决定。',delivery:'初审底稿、谈判备忘和法务复核清单；均为内部不对外文件。'}
   };
   var chapterData={
-    'ch0.html':{stage:'接住混乱',ai:'帮助识别工作现场和触发任务。',human:'确认这件事是否值得推进，以及谁对结果负责。',state:'故事入口，尚未进入千问办公推演。',next:'第一章 · GTD式收集与澄清'},
-    'ch1.html':{stage:'GTD式收集与澄清',ai:'阅读资料池，提取任务线索和可能的交付方向。',human:'确认任务边界，决定暂时不写 PPT、不直接给方案。',state:'AI 中间产出，尚无独立人工验收证据。',next:'第二章 · 明确交付物'},
-    'ch2.html':{stage:'明确交付物',ai:'整理受众、业务问题、交付物和缺口。',human:'确认真正要交什么，以及哪些判断仍需向上确认。',state:'任务理解结果，交付格式仍需人工确认。',next:'第三章 · 上下文与流程拆解'},
-    'ch3.html':{stage:'上下文与流程拆解',ai:'建立资料地图，连接文件、问题、证据和时间。',human:'确认来源可信度、优先级和敏感信息边界。',state:'资料地图中间产出，需人工核对来源。',next:'第四章 · 证据核验'},
-    'ch4.html':{stage:'证据核验',ai:'计算分布、交叉比对、标出冲突并保留溯源。',human:'确认统计口径、表达边界和哪些数字可以进入汇报。',state:'证据分析结果，数字与口径需人工复核。',next:'第五章 · 人工压力测试'},
-    'ch5.html':{stage:'人工压力测试',ai:'模拟挑剔总监，主动寻找证据不足和推断过度。',human:'判断质疑是否成立，并决定结论如何改写。',state:'AI 压力测试结果，质疑本身仍需人判断。',next:'第六章 · 人工审定与复用'},
-    'ch6.html':{stage:'人工审定与复用',ai:'按审核决定生成待确认版和后续行动清单。',human:'决定能否交付、找谁确认、哪些事项暂不承诺。',state:'待确认版，需总监和责任人拍板。',next:'形成可复用的 Prompt、模板和检查清单'}
+    'ch0.html':{stage:'为什么打开千问办公',ai:'帮助识别工作现场和触发任务。',human:'确认这件事是否值得推进，以及谁对结果负责。',state:'故事入口，尚未进入千问办公推演。',next:'第一章 · 先让资料池开口'},
+    'ch1.html':{stage:'先让资料池开口',ai:'阅读资料池，提取任务线索和可能的交付方向。',human:'确认任务边界，决定暂时不写 PPT、不直接给方案。',state:'千问中间产出，尚无独立人工验收证据。',next:'第二章 · 这个事情要交付什么'},
+    'ch2.html':{stage:'这个事情要交付什么',ai:'整理受众、业务问题、交付物和缺口。',human:'确认真正要交什么，以及哪些判断仍需向上确认。',state:'任务理解结果，交付格式仍需人工确认。',next:'第三章 · 27 份资料如何变成资料地图'},
+    'ch3.html':{stage:'27 份资料如何变成资料地图',ai:'建立资料地图，连接文件、问题、证据和时间。',human:'确认来源可信度、优先级和敏感信息边界。',state:'资料地图中间产出，需人工核对来源。',next:'第四章 · 从数字到证据型结论'},
+    'ch4.html':{stage:'从数字到证据型结论',ai:'计算分布、交叉比对、标出冲突并保留溯源。',human:'确认统计口径、表达边界和哪些数字可以进入汇报。',state:'证据分析结果，数字与口径需人工复核。',next:'第五章 · 让挑剔总监先来质疑'},
+    'ch5.html':{stage:'让挑剔总监先来质疑',ai:'模拟挑剔总监，主动寻找证据不足和推断过度。',human:'判断质疑是否成立，并决定结论如何改写。',state:'压力测试结果，质疑本身仍需人判断。',next:'第六章 · 人工审定与待确认版'},
+    'ch6.html':{stage:'人工审定与待确认版',ai:'按审核决定生成待确认版和后续行动清单。',human:'决定能否交付、找谁确认、哪些事项暂不承诺。',state:'待确认版，需总监和责任人拍板。',next:'回到实战案例分享'}
   };
   var current=(window.location.pathname.split('/').pop() || 'index.html').split('#')[0];
 
@@ -253,6 +262,45 @@ document.querySelectorAll('.sidebar-group-title').forEach(function(btn){
   addCaseDetailCard();
   addChapterMethodCard();
   softenCaseLanguage();
+})();
+
+// Chapter navigation: one consistent previous/next pair for the Xiaoming case.
+(function(){
+  var current=(window.location.pathname.split('/').pop() || 'index.html').split('#')[0];
+  var links={
+    'ch0.html':{prev:{href:'cases.html',kicker:'案例入口',title:'返回实战案例分享'},next:{href:'ch1.html',kicker:'下一章',title:'第一章 · 先让资料池开口'}},
+    'ch1.html':{prev:{href:'ch0.html',kicker:'上一章',title:'序章 · 小明为什么打开千问办公'},next:{href:'ch2.html',kicker:'下一章',title:'第二章 · “这个事情”到底要交付什么'}},
+    'ch2.html':{prev:{href:'ch1.html',kicker:'上一章',title:'第一章 · 先让资料池开口'},next:{href:'ch3.html',kicker:'下一章',title:'第三章 · 27 份资料如何变成资料地图'}},
+    'ch3.html':{prev:{href:'ch2.html',kicker:'上一章',title:'第二章 · “这个事情”到底要交付什么'},next:{href:'ch4.html',kicker:'下一章',title:'第四章 · 从数字到证据型结论'}},
+    'ch4.html':{prev:{href:'ch3.html',kicker:'上一章',title:'第三章 · 27 份资料如何变成资料地图'},next:{href:'ch5.html',kicker:'下一章',title:'第五章 · 让挑剔总监先来质疑'}},
+    'ch5.html':{prev:{href:'ch4.html',kicker:'上一章',title:'第四章 · 从数字到证据型结论'},next:{href:'ch6.html',kicker:'下一章',title:'第六章 · 人工审定与待确认版'}},
+    'ch6.html':{prev:{href:'ch5.html',kicker:'上一章',title:'第五章 · 让挑剔总监先来质疑'},next:{href:'cases.html',kicker:'案例结束',title:'回到实战案例分享'}}
+  };
+  var data=links[current];
+  var sec=document.querySelector('.main > section.sec');
+  if(!data || !sec || sec.querySelector('.chapter-nav')){return}
+
+  sec.querySelectorAll('a[href^="ch"],a[href="cases.html"]').forEach(function(link){
+    var parent=link.parentElement;
+    while(parent && parent!==sec){
+      var style=parent.getAttribute('style') || '';
+      if(parent.tagName==='P' || parent.classList.contains('chapter-nav') || /margin-top/.test(style)){
+        parent.remove();
+        return;
+      }
+      parent=parent.parentElement;
+    }
+    link.remove();
+  });
+
+  function render(item,side){
+    return '<a class="chapter-nav-link chapter-nav-'+side+'" href="'+item.href+'"><span class="chapter-nav-kicker">'+item.kicker+'</span><strong>'+item.title+'</strong></a>';
+  }
+  var nav=document.createElement('nav');
+  nav.className='chapter-nav';
+  nav.setAttribute('aria-label','章节导航');
+  nav.innerHTML=render(data.prev,'prev')+render(data.next,'next');
+  sec.appendChild(nav);
 })();
 
 // Mobile sidebar toggle

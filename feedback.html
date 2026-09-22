@@ -179,12 +179,13 @@
     <p class="footnote">本页面不要求登录，也不主动收集姓名、电话或邮箱。</p>
   </main>
 
+  <script src="feedback-config.js"></script>
   <script>
     /*
       Static-page note: set this to a trusted JSON endpoint when the collection
       service is ready. Until then the page remains a public anonymous UI demo.
     */
-    const FEEDBACK_ENDPOINT = "";
+    const FEEDBACK_ENDPOINT = (window.QWEN_FEEDBACK_CONFIG || {}).submitEndpoint || "";
     const form = document.getElementById("feedbackForm");
     const success = document.getElementById("success");
 

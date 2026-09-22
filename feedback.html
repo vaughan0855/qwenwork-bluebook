@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#9fe870">
+  <title>课程反馈 — 千问办公绿皮书</title>
+  <link rel="icon" type="image/png" href="qwenwork-logo.png">
+  <style>
+    :root {
+      --black: #0e0f0c;
+      --green: #9fe870;
+      --dark-green: #163300;
+      --mint: #e2f6d5;
+      --soft: #f4f6f2;
+      --muted: #686d68;
+      --line: rgba(14,15,12,.13);
+      --max: 760px;
+      --sans: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-font-smoothing: antialiased; }
+    body {
+      margin: 0;
+      color: var(--black);
+      background: linear-gradient(135deg, #fff 0%, #fff 52%, #f1faeb 100%);
+      font-family: var(--sans);
+      line-height: 1.5;
+    }
+    a { color: inherit; }
+    .page { width: min(calc(100% - 32px), var(--max)); margin: 0 auto; padding: 28px 0 56px; }
+    .brand { display: flex; align-items: center; gap: 9px; margin-bottom: 38px; }
+    .brand img { width: 24px; height: 24px; object-fit: contain; }
+    .brand span { font-size: 14px; font-weight: 700; letter-spacing: -.2px; }
+    .back { margin-left: auto; color: var(--muted); font-size: 13px; font-weight: 600; text-decoration: none; }
+    .back:hover { color: var(--dark-green); text-decoration: underline; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 18px; color: var(--dark-green); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .eyebrow::before { content: ""; width: 24px; height: 3px; border-radius: 3px; background: var(--green); }
+    h1 { margin: 0 0 16px; font-size: clamp(30px, 7vw, 52px); font-weight: 900; line-height: 1.03; letter-spacing: -.055em; }
+    .intro { max-width: 660px; margin: 0 0 28px; color: #555a55; font-size: 16px; font-weight: 600; line-height: 1.75; }
+    .anonymous { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 26px; padding: 7px 12px; border-radius: 999px; background: var(--mint); color: var(--dark-green); font-size: 12px; font-weight: 700; }
+    .anonymous::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--dark-green); }
+    .form-card { padding: clamp(22px, 5vw, 38px); border-radius: 30px; background: rgba(255,255,255,.93); box-shadow: 0 0 0 1px var(--line), 0 18px 55px rgba(14,15,12,.08); }
+    .question { padding: 24px 0; border-bottom: 1px solid rgba(14,15,12,.08); }
+    .question:first-child { padding-top: 0; }
+    .question:last-of-type { border-bottom: 0; }
+    .q-head { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 17px; }
+    .q-num { flex: 0 0 30px; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 10px; background: var(--mint); color: var(--dark-green); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; font-weight: 800; }
+    .q-title { margin: 2px 0 0; font-size: 17px; font-weight: 800; line-height: 1.45; }
+    .required { color: #b33a3a; font-size: 11px; font-weight: 700; }
+    .hint { margin: -6px 0 12px 42px; color: var(--muted); font-size: 12px; }
+    .options { display: grid; gap: 10px; }
+    .options.score { grid-template-columns: repeat(5, 1fr); }
+    .options.two { grid-template-columns: repeat(2, 1fr); }
+    .option { position: relative; display: flex; align-items: center; justify-content: center; min-height: 48px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 14px; background: #fff; color: #4f554f; cursor: pointer; font-size: 14px; font-weight: 600; line-height: 1.35; text-align: center; transition: .16s ease; }
+    .option:hover { border-color: var(--green); background: #fbfff9; }
+    .option input { position: absolute; opacity: 0; pointer-events: none; }
+    .option:has(input:checked) { border-color: var(--dark-green); background: var(--mint); color: var(--dark-green); box-shadow: inset 0 0 0 1px var(--dark-green); }
+    .check-list { display: grid; gap: 9px; }
+    .check { display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 14px; color: #4f554f; cursor: pointer; font-size: 14px; font-weight: 600; line-height: 1.45; }
+    .check:hover { border-color: var(--green); background: #fbfff9; }
+    .check input { width: 18px; height: 18px; flex: 0 0 auto; margin: 1px 0 0; accent-color: var(--dark-green); }
+    .nps { display: grid; grid-template-columns: repeat(11, 1fr); gap: 6px; }
+    .nps label { position: relative; }
+    .nps input { position: absolute; opacity: 0; pointer-events: none; }
+    .nps span { display: grid; place-items: center; height: 42px; border: 1px solid var(--line); border-radius: 11px; background: #fff; color: #4f554f; cursor: pointer; font-size: 13px; font-weight: 800; }
+    .nps span:hover, .nps input:checked + span { border-color: var(--dark-green); background: var(--dark-green); color: #fff; }
+    .nps-labels { display: flex; justify-content: space-between; margin-top: 8px; color: var(--muted); font-size: 11px; }
+    textarea { width: 100%; min-height: 90px; margin-top: 15px; padding: 12px 14px; resize: vertical; border: 1px solid var(--line); border-radius: 14px; color: var(--black); font: inherit; outline: 0; }
+    textarea:focus { border-color: var(--dark-green); box-shadow: 0 0 0 3px rgba(159,232,112,.35); }
+    .actions { display: flex; align-items: center; gap: 15px; padding-top: 26px; }
+    button { border: 0; border-radius: 999px; padding: 13px 25px; background: var(--green); color: var(--dark-green); cursor: pointer; font: inherit; font-weight: 800; box-shadow: 0 8px 18px rgba(159,232,112,.28); }
+    button:hover { transform: translateY(-1px); }
+    .fine { margin: 0; color: var(--muted); font-size: 12px; font-weight: 600; }
+    .success { display: none; padding: 34px 0 8px; text-align: center; }
+    .success.show { display: block; }
+    .success-icon { width: 54px; height: 54px; display: grid; place-items: center; margin: 0 auto 14px; border-radius: 50%; background: var(--mint); color: var(--dark-green); font-size: 28px; font-weight: 900; }
+    .success h2 { margin: 0 0 8px; font-size: 24px; }
+    .success p { margin: 0; color: var(--muted); font-size: 14px; }
+    .footnote { margin-top: 18px; color: var(--muted); font-size: 12px; text-align: center; }
+    @media (max-width: 600px) {
+      .page { width: min(calc(100% - 22px), var(--max)); padding-top: 20px; }
+      .brand { margin-bottom: 30px; }
+      .form-card { padding: 22px 16px; border-radius: 22px; }
+      .options.score { grid-template-columns: repeat(3, 1fr); }
+      .nps { gap: 4px; }
+      .nps span { height: 37px; font-size: 12px; }
+      .actions { align-items: flex-start; flex-direction: column; }
+      button { width: 100%; }
+    }
+    @media (max-width: 380px) {
+      .options.score { grid-template-columns: repeat(2, 1fr); }
+      .options.two { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="brand">
+      <img src="qwenwork-logo.png" alt="">
+      <span>千问办公绿皮书</span>
+      <a class="back" href="index.html">返回首页</a>
+    </header>
+
+    <section>
+      <div class="eyebrow">COURSE FEEDBACK</div>
+      <h1>《复杂办公任务的AI实战》</h1>
+      <p class="intro">感谢您参与了本次原点学堂与千问办公共同举办的《复杂办公任务的AI实战》课程，请用1分钟时间提供您的课程反馈，帮我们进一步完善课程，谢谢。</p>
+      <div class="anonymous">匿名填写 · 不需要登录 · 不收集身份信息</div>
+    </section>
+
+    <form class="form-card" id="feedbackForm">
+      <section class="question">
+        <div class="q-head"><span class="q-num">01</span><p class="q-title">本次分享对你理解和处理复杂办公任务是否有帮助？ <span class="required">必填</span></p></div>
+        <div class="options score">
+          <label class="option"><input type="radio" name="helpfulness" value="非常有帮助" required>非常有帮助</label>
+          <label class="option"><input type="radio" name="helpfulness" value="比较有帮助">比较有帮助</label>
+          <label class="option"><input type="radio" name="helpfulness" value="一般">一般</label>
+          <label class="option"><input type="radio" name="helpfulness" value="帮助不大">帮助不大</label>
+          <label class="option"><input type="radio" name="helpfulness" value="没有帮助">没有帮助</label>
+        </div>
+      </section>
+
+      <section class="question">
+        <div class="q-head"><span class="q-num">02</span><p class="q-title">哪个环节对你最有价值？ <span class="required">必填</span></p></div>
+        <p class="hint">可多选</p>
+        <div class="check-list">
+          <label class="check"><input type="checkbox" name="valuable" value="复杂任务的识别与拆解">复杂任务的识别与拆解</label>
+          <label class="check"><input type="checkbox" name="valuable" value="GTD+AI协作工作流">GTD + AI 协作工作流</label>
+          <label class="check"><input type="checkbox" name="valuable" value="任务画布/任务契约">任务画布 / 任务契约</label>
+          <label class="check"><input type="checkbox" name="valuable" value="千问办公功能演示">千问办公功能演示</label>
+          <label class="check"><input type="checkbox" name="valuable" value="Word、PPT、Excel实操">Word、PPT、Excel 等实操</label>
+          <label class="check"><input type="checkbox" name="valuable" value="完整案例分析">完整案例分析</label>
+        </div>
+      </section>
+
+      <section class="question">
+        <div class="q-head"><span class="q-num">03</span><p class="q-title">培训结束后，你最可能把哪种方法带回工作中？ <span class="required">必填</span></p></div>
+        <div class="options two">
+          <label class="option"><input type="radio" name="action" value="先澄清任务目标和交付物" required>先澄清任务目标和交付物</label>
+          <label class="option"><input type="radio" name="action" value="用Inbox集中整理资料">用 Inbox 集中整理资料</label>
+          <label class="option"><input type="radio" name="action" value="让AI生成资料地图">让 AI 生成资料地图</label>
+          <label class="option"><input type="radio" name="action" value="用AI生成多格式交付物">用 AI 生成多格式交付物</label>
+          <label class="option"><input type="radio" name="action" value="沉淀为模板、SOP或Skill">沉淀为模板、SOP 或 Skill</label>
+          <label class="option"><input type="radio" name="action" value="暂时还没有明确计划">暂时还没有明确计划</label>
+        </div>
+      </section>
+
+      <section class="question">
+        <div class="q-head"><span class="q-num">04</span><p class="q-title">你有多大可能把本次分享推荐给同事或朋友？ <span class="required">必填</span></p></div>
+        <div class="nps" role="radiogroup" aria-label="推荐度评分">
+          <label><input type="radio" name="nps" value="0" required><span>0</span></label>
+          <label><input type="radio" name="nps" value="1"><span>1</span></label>
+          <label><input type="radio" name="nps" value="2"><span>2</span></label>
+          <label><input type="radio" name="nps" value="3"><span>3</span></label>
+          <label><input type="radio" name="nps" value="4"><span>4</span></label>
+          <label><input type="radio" name="nps" value="5"><span>5</span></label>
+          <label><input type="radio" name="nps" value="6"><span>6</span></label>
+          <label><input type="radio" name="nps" value="7"><span>7</span></label>
+          <label><input type="radio" name="nps" value="8"><span>8</span></label>
+          <label><input type="radio" name="nps" value="9"><span>9</span></label>
+          <label><input type="radio" name="nps" value="10"><span>10</span></label>
+        </div>
+        <div class="nps-labels"><span>完全不可能</span><span>非常可能</span></div>
+        <textarea name="reason" placeholder="你愿意给这个分数的主要原因是什么？（选填）"></textarea>
+      </section>
+
+      <div class="actions">
+        <button type="submit">提交反馈</button>
+        <p class="fine">感谢你的真实反馈，我们只用于课程优化。</p>
+      </div>
+
+      <div class="success" id="success" aria-live="polite">
+        <div class="success-icon">✓</div>
+        <h2>感谢你的反馈！</h2>
+        <p>你的意见会帮助我们把下一次课程做得更好。</p>
+      </div>
+    </form>
+    <p class="footnote">本页面不要求登录，也不主动收集姓名、电话或邮箱。</p>
+  </main>
+
+  <script>
+    /*
+      Static-page note: set this to a trusted JSON endpoint when the collection
+      service is ready. Until then the page remains a public anonymous UI demo.
+    */
+    const FEEDBACK_ENDPOINT = "";
+    const form = document.getElementById("feedbackForm");
+    const success = document.getElementById("success");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const selected = [...form.querySelectorAll('input[name="valuable"]:checked')].map((input) => input.value);
+      if (!selected.length) {
+        alert("请至少选择一个对你最有价值的环节。");
+        return;
+      }
+
+      const payload = Object.fromEntries(new FormData(form).entries());
+      payload.valuable = selected;
+      payload.submittedAt = new Date().toISOString();
+
+      try {
+        if (FEEDBACK_ENDPOINT) {
+          const response = await fetch(FEEDBACK_ENDPOINT, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+          if (!response.ok) throw new Error("feedback request failed");
+        }
+        form.querySelectorAll(".question, .actions").forEach((element) => element.style.display = "none");
+        success.classList.add("show");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } catch (error) {
+        alert("提交暂时失败，请稍后再试。");
+      }
+    });
+  </script>
+</body>
+</html>

@@ -47,9 +47,11 @@
     const $ = (id) => document.getElementById(id);
     const notice = (message) => { $("notice").textContent = message; $("notice").classList.add("show"); };
     const clearNotice = () => $("notice").classList.remove("show");
+    const normalizeList = (value) => Array.isArray(value) ? value : String(value || "").split(/[;,，、]/).map((x) => x.trim()).filter(Boolean);
     const normalize = (row) => {
-      const valuable = Array.isArray(row.valuable) ? row.valuable : String(row.valuable || "").split(/[;,，、]/).map((x) => x.trim()).filter(Boolean);
-      return {helpfulness:String(row.helpfulness || "").trim(), valuable, action:String(row.action || "").trim(), nps:Number(row.nps), reason:String(row.reason || "").trim(), submittedAt:row.submittedAt || row.submitted_at || row.timestamp || ""};
+      const valuable = normalizeList(row.valuable);
+      const action = normalizeList(row.action);
+      return {helpfulness:String(row.helpfulness || "").trim(), valuable, action, nps:Number(row.nps), reason:String(row.reason || "").trim(), submittedAt:row.submittedAt || row.submitted_at || row.timestamp || ""};
     };
     const parseCSV = (text) => {
       const records=[]; let row=[]; let cell=""; let quoted=false;
@@ -69,11 +71,16 @@
       renderBars("helpBars",countBy(valid,(r)=>r.helpfulness),labels.helpfulness);
       renderBars("npsBars",countBy(valid,(r)=>String(r.nps)),["0","1","2","3","4","5","6","7","8","9","10"]);
       renderBars("valueBars",valid.flatMap((r)=>r.valuable),labels.valuable);
-      renderBars("actionBars",countBy(valid,(r)=>r.action),labels.action);
+      renderBars("actionBars",countBy(valid.flatMap((r)=>r.action),(value)=>value),labels.action);
       const comments=valid.filter((r)=>r.reason).slice().reverse(); $("commentCount").textContent=comments.length+" 条"; $("comments").innerHTML=comments.length?comments.map((r)=>`<div class="comment">${escapeHtml(r.reason)}<small>${r.submittedAt?escapeHtml(new Date(r.submittedAt).toLocaleString("zh-CN")):"匿名反馈"} · NPS ${r.nps}</small></div>`).join(""): '<div class="empty">暂无文字反馈。</div>';
     };
     const loadData = async () => {
-      if(!config.dataEndpoint){notice("尚未配置数据接口。你可以导入接口导出的 CSV / JSON 文件查看汇总。页面本身不保存原始反馈。");render();return}
+      if(!config.dataEndpoint){
+        try { rows = JSON.parse(localStorage.getItem("qwenwork_feedback_rows") || "[]").map(normalize); } catch (error) { rows = []; }
+        notice(rows.length ? "当前显示的是本设备试运行数据；正式汇总仍需配置共享数据接口。" : "尚未配置共享数据接口。你可以先提交一份反馈，或导入接口导出的 CSV / JSON 文件查看汇总。");
+        render();
+        return;
+      }
       try{const response=await fetch(config.dataEndpoint,{headers:{Accept:"application/json"}});if(!response.ok)throw new Error("request failed");const data=await response.json();rows=(Array.isArray(data)?data:(data.data||[])).map(normalize);clearNotice();render()}catch(error){notice("数据接口暂时无法访问，请检查接口地址或改用文件导入。");render()}
     };
     $("fileInput").addEventListener("change",async(event)=>{const file=event.target.files[0];if(!file)return;try{const text=await file.text();const data=file.name.toLowerCase().endsWith(".json")?JSON.parse(text):parseCSV(text);rows=(Array.isArray(data)?data:(data.data||[])).map(normalize);clearNotice();render()}catch(error){notice("文件无法解析，请使用 UTF-8 编码的 CSV 或 JSON。");}});

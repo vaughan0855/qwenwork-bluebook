@@ -136,13 +136,14 @@
 
       <section class="question">
         <div class="q-head"><span class="q-num">03</span><p class="q-title">培训结束后，你最可能把哪种方法带回工作中？ <span class="required">必填</span></p></div>
-        <div class="options two">
-          <label class="option"><input type="radio" name="action" value="先澄清任务目标和交付物" required>先澄清任务目标和交付物</label>
-          <label class="option"><input type="radio" name="action" value="用Inbox集中整理资料">用 Inbox 集中整理资料</label>
-          <label class="option"><input type="radio" name="action" value="让AI生成资料地图">让 AI 生成资料地图</label>
-          <label class="option"><input type="radio" name="action" value="用AI生成多格式交付物">用 AI 生成多格式交付物</label>
-          <label class="option"><input type="radio" name="action" value="沉淀为模板、SOP或Skill">沉淀为模板、SOP 或 Skill</label>
-          <label class="option"><input type="radio" name="action" value="暂时还没有明确计划">暂时还没有明确计划</label>
+        <p class="hint">可多选</p>
+        <div class="check-list">
+          <label class="check"><input type="checkbox" name="action" value="先澄清任务目标和交付物">先澄清任务目标和交付物</label>
+          <label class="check"><input type="checkbox" name="action" value="用Inbox集中整理资料">用 Inbox 集中整理资料</label>
+          <label class="check"><input type="checkbox" name="action" value="让AI生成资料地图">让 AI 生成资料地图</label>
+          <label class="check"><input type="checkbox" name="action" value="用AI生成多格式交付物">用 AI 生成多格式交付物</label>
+          <label class="check"><input type="checkbox" name="action" value="沉淀为模板、SOP或Skill">沉淀为模板、SOP 或 Skill</label>
+          <label class="check"><input type="checkbox" name="action" value="暂时还没有明确计划">暂时还没有明确计划</label>
         </div>
       </section>
 
@@ -196,9 +197,15 @@
         alert("请至少选择一个对你最有价值的环节。");
         return;
       }
+      const selectedActions = [...form.querySelectorAll('input[name="action"]:checked')].map((input) => input.value);
+      if (!selectedActions.length) {
+        alert("请至少选择一个你准备带回工作的做法。");
+        return;
+      }
 
       const payload = Object.fromEntries(new FormData(form).entries());
       payload.valuable = selected;
+      payload.action = selectedActions;
       payload.submittedAt = new Date().toISOString();
 
       try {
@@ -209,6 +216,12 @@
             body: JSON.stringify(payload)
           });
           if (!response.ok) throw new Error("feedback request failed");
+        } else {
+          const localKey = "qwenwork_feedback_rows";
+          const localRows = JSON.parse(localStorage.getItem(localKey) || "[]");
+          localRows.push(payload);
+          localStorage.setItem(localKey, JSON.stringify(localRows));
+          document.querySelector("#success p").textContent = "反馈已记录在本设备，可在同一浏览器的汇总页查看。";
         }
         form.querySelectorAll(".question, .actions").forEach((element) => element.style.display = "none");
         success.classList.add("show");

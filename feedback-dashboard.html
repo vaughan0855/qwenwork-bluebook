@@ -37,6 +37,10 @@
   <script src="feedback-config.js"></script>
   <script>
     const config = window.QWEN_FEEDBACK_CONFIG || {};
+    const localKey = "qwenwork_feedback_rows";
+    if (new URLSearchParams(window.location.search).get("clear") === "1") {
+      localStorage.removeItem(localKey);
+    }
     const labels = {
       helpfulness: ["非常有帮助", "比较有帮助", "一般", "帮助不大", "没有帮助"],
       valuable: ["复杂任务的识别与拆解", "GTD+AI协作工作流", "任务画布/任务契约", "千问办公功能演示", "Word、PPT、Excel实操", "完整案例分析"],
@@ -76,7 +80,7 @@
     };
     const loadData = async () => {
       if(!config.dataEndpoint){
-        try { rows = JSON.parse(localStorage.getItem("qwenwork_feedback_rows") || "[]").map(normalize); } catch (error) { rows = []; }
+        try { rows = JSON.parse(localStorage.getItem(localKey) || "[]").map(normalize); } catch (error) { rows = []; }
         notice(rows.length ? "当前显示的是本设备试运行数据；正式汇总仍需配置共享数据接口。" : "尚未配置共享数据接口。你可以先提交一份反馈，或导入接口导出的 CSV / JSON 文件查看汇总。");
         render();
         return;

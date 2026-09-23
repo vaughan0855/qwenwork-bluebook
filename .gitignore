@@ -3,4 +3,5 @@
 .codex/
 .qwenworkcn/
 node_modules/
+.wrangler/
 *.log

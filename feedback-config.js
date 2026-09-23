@@ -4,6 +4,6 @@
   either an array or { data: [...] } using the same field names as feedback.html.
 */
 window.QWEN_FEEDBACK_CONFIG = {
-  submitEndpoint: "",
-  dataEndpoint: ""
+  submitEndpoint: "https://qwenwork-feedback.feedback-api.workers.dev/feedback",
+  dataEndpoint: "https://qwenwork-feedback.feedback-api.workers.dev/summary"
 };

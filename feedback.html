@@ -208,21 +208,18 @@
       payload.action = selectedActions;
       payload.submittedAt = new Date().toISOString();
 
+      if (!FEEDBACK_ENDPOINT) {
+        alert("当前反馈接口尚未配置，提交不会进入共享汇总，请稍后再试。");
+        return;
+      }
+
       try {
-        if (FEEDBACK_ENDPOINT) {
-          const response = await fetch(FEEDBACK_ENDPOINT, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
-          });
-          if (!response.ok) throw new Error("feedback request failed");
-        } else {
-          const localKey = "qwenwork_feedback_rows";
-          const localRows = JSON.parse(localStorage.getItem(localKey) || "[]");
-          localRows.push(payload);
-          localStorage.setItem(localKey, JSON.stringify(localRows));
-          document.querySelector("#success p").textContent = "反馈已记录在本设备，可在同一浏览器的汇总页查看。";
-        }
+        const response = await fetch(FEEDBACK_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        if (!response.ok) throw new Error("feedback request failed");
         form.querySelectorAll(".question, .actions").forEach((element) => element.style.display = "none");
         success.classList.add("show");
         window.scrollTo({ top: 0, behavior: "smooth" });

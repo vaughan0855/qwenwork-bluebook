@@ -1,0 +1,15 @@
+{
+  "$schema": "https://static.cloudbase.net/cli/cloudbaserc.schema.json",
+  "envId": "qwenwork-feedback-d0d30k294ca8ef",
+  "functionRoot": ".",
+  "functions": [
+    {
+      "name": "http-nodejs-helloworld-jphy",
+      "type": "HTTP",
+      "runtime": "Nodejs20.19",
+      "timeout": 10,
+      "memorySize": 512,
+      "installDependency": true
+    }
+  ]
+}

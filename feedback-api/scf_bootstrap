@@ -1,0 +1,4 @@
+#!/bin/sh
+export PORT="${PORT:-9000}"
+export NODE_ENV="production"
+exec node index.js

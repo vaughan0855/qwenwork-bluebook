@@ -1,0 +1,8 @@
+{
+  "name": "qwenwork-feedback-api",
+  "private": true,
+  "main": "index.js",
+  "dependencies": {
+    "@cloudbase/node-sdk": "^3.0.0"
+  }
+}
